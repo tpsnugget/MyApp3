@@ -1,0 +1,14 @@
+LICENSE
+MyApp3.code-workspace
+api/node_modules
+api/public
+api/views
+client/node_modules
+client/public/favicon.ico
+client/public/logo192.png
+client/public/logo512.png
+client/src/App.test.js
+client/src/logo.svg
+client/src/serviceWorker.js
+client/src/setupTests.js
+client/README.md
