@@ -1,0 +1,14 @@
+.Sidebar-main-container {
+   width: 300px;
+   height: 100vh;
+   background-color: lightgray;
+}
+
+.Sidebar-p {
+   color: purple;
+   margin: 0.5rem 0.5rem;
+}
+
+.Sidebar-img {
+   width: 60%;
+}

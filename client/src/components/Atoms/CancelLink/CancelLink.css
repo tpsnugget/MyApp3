@@ -1,0 +1,25 @@
+.CancelLink-button {
+   padding: 0.5rem 1rem;
+   border-radius: 0.45rem;
+   border: 1px solid black;
+   font-size: 1.2rem;
+   font-weight: 600;
+   letter-spacing: 0.15rem;
+   margin-bottom: 1rem;
+}
+
+.CancelLink-button:hover {
+   border: 1px solid darkgray;
+   background-color: rgba(211, 211, 211, 0.226);
+   font-weight: 700;
+}
+
+/* .CancelLink-link {
+   text-decoration: none;
+   color: black;
+} */
+
+.CancelLink-div {
+   display: flex;
+   margin: 0 48px;
+}

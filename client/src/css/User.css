@@ -1,0 +1,63 @@
+.User {
+   display: flex;
+   flex-direction: column;
+   width: 95%;
+   margin: 1rem auto;
+   border: 1px solid lightgray;
+   border-radius: 0.25rem;
+}
+
+.User-header {
+   width: 100%;
+   height: auto;
+   text-align: left;
+   align-self: center;
+   padding: 0;
+   border-bottom: 1px solid darkgray;
+   align-items: center;
+   background-color: rgba(3, 87, 3, 0.20);
+}
+
+.User-header-h4 {
+   margin-left: 1rem;
+}
+
+.User-main-div {
+   width: 45%;
+   text-align: end;  
+}
+
+.User-main {
+   display: flex;
+}
+
+.User-row {
+   display: flex;
+   margin: 1rem;
+}
+
+.User-inner-span {
+   width: 50%;
+   margin-right: 1rem;
+}
+
+/* input {
+   width: 250px;
+   height: 35px;
+   margin-left: 1rem;
+   margin-top: 0.25rem;
+   border-radius: 0.35rem;
+   border: 1px solid lightgray;
+   font-size: 1.2rem;
+}
+
+label {
+   font-size: 0.85rem;
+   font-weight: bold;
+}
+
+input::placeholder {
+   font-size: 1.2rem;
+   padding-left: 0.5rem;
+   color: lightgray;
+} */

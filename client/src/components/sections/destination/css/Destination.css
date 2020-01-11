@@ -1,0 +1,8 @@
+.Destination-nav-container {
+   display: flex;
+}
+
+.Destination-inner-container {
+   display: block;
+   width: 100%;
+}

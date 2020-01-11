@@ -1,0 +1,19 @@
+.Landing-main-container {
+   width: 100%;
+   height: 100vh;
+   margin: auto;
+   margin-top: 0;
+   background-image: linear-gradient(rgba(3, 87, 3, 0.3), rgba(255, 255, 0, 0.5)),
+   url("https://images.unsplash.com/photo-1487147264018-f937fba0c817?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60");
+   background-size: contain;
+}
+
+.Landing-img-row {
+   width: 100%;
+   height: 400px;
+   display: flex;
+   margin-bottom: 6rem;
+   justify-content: center;
+   align-items: center;
+}
+

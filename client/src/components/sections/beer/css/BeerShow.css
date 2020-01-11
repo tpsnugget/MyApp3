@@ -1,0 +1,19 @@
+.BeerShow-main-container {
+   display: flex;
+   width: 100%;
+}
+
+.BeerShow-left-container {
+   width: 60%;
+   text-align: left;
+   margin-left: 2rem;
+}
+
+.BeerShow-right-container {
+   width: 40%;
+   margin-right: 2rem;
+}
+
+.BeerShow-img {
+   width: 100%;
+}

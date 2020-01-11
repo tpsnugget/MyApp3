@@ -1,0 +1,26 @@
+.InputText-label {
+   margin: 8px 16px;
+   text-align: start;
+   font-size: 0.85rem;
+   font-weight: bold;
+}
+
+.InputText-span {
+   margin-left: 4px;
+}
+
+.InputText-input {
+   width: 250px;
+   height: 35px;
+   margin-left: 0;
+   margin-top: 0.25rem;
+   border-radius: 0.35rem;
+   border: 1px solid lightgray;
+   font-size: 1.2rem;
+}
+
+.InputText-input::placeholder {
+   font-size: 1.2rem;
+   padding-left: 0.5rem;
+   color: lightgray;
+}
