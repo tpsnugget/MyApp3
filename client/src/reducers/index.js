@@ -94,6 +94,34 @@ export default (state, action) => {
          oneRecipeData: action.oneRecipeData
       }
 
+      case "GET_RESTAURANT_DATA":
+      // console.log("GET_RESTAURANT_DATA: ", action.restaurantData)
+      return {
+         ...state,
+         restaurantData: action.restaurantData
+      }
+
+      case "GET_ONE_RESTAURANT_DATA":
+      // console.log("GET_ONE_RESTAURANT_DATA: ", action.oneRestaurantData)
+      return {
+         ...state,
+         oneRestaurantData: action.oneRestaurantData
+      }
+
+      case "GET_RV_DATA":
+      // console.log("GET_RV_DATA: ", action.rvData)
+      return {
+         ...state,
+         rvData: action.rvData
+      }
+
+      case "GET_ONE_RV_DATA":
+      // console.log("GET_ONE_RV_DATA: ", action.oneRVData)
+      return {
+         ...state,
+         oneRVData: action.oneRVData
+      }
+
       default:
       return state
    }

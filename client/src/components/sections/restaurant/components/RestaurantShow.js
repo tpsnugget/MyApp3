@@ -4,6 +4,10 @@ import "../css/RestaurantShow.css"
 
 class RestaurantShow extends Component {
 
+   static defaultProps = {
+      data: {}
+   }
+
    static propTypes = {
       /* Passed down from Beer.js
          Used here to show all the data for one selected BEER */
