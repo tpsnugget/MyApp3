@@ -4,6 +4,10 @@ import "../css/DestinationShow.css"
 
 class DestinationShow extends Component {
 
+   static defaultProps = {
+      data: {}
+   }
+
    static propTypes = {
       /* Passed down from Destination.js
          Used here to show all the data for one selected Destination */
@@ -16,10 +20,6 @@ class DestinationShow extends Component {
               country, continent, phone, latitude, longitude, image, website,
               rating, personalNotes, pubNotes, restaurantNotes, sightNotes,
               tourNotes } = this.props.data
-
-      // const address = `${city}, ${state} ${zip}`
-      // const description = `Destination Type: ${DestinationType} - Destination Color: ${DestinationColor}`
-      // const numbers = `ABV: ${abv} - IBU: ${ibu} - Rating: ${rating}`
 
       return (
          <div className="DestinationShow-main-container">

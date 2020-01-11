@@ -62,3 +62,17 @@ export function getOneBeerData(oneBeerData){
       oneBeerData: oneBeerData
    }
 }
+
+export function getDestinationData(destinationData){
+   return {
+      type: "GET_DESTINATION_DATA",
+      destinationData: destinationData
+   }
+}
+
+export function getOneDestinationData(oneDestinationData){
+   return {
+      type: "GET_ONE_DESTINATION_DATA",
+      oneDestinationData: oneDestinationData
+   }
+}

@@ -66,6 +66,20 @@ export default (state, action) => {
          oneBeerData: action.oneBeerData
       }
 
+      case "GET_DESTINATION_DATA":
+      // console.log("GET_DESTINATION_DATA: ", action.destinationData)
+      return {
+         ...state,
+         destinationData: action.destinationData
+      }
+
+      case "GET_ONE_DESTINATION_DATA":
+      // console.log("GET_ONE_DESTINATION_DATA: ", action.oneDestinationData)
+      return {
+         ...state,
+         oneDestinationData: action.oneDestinationData
+      }
+
       default:
       return state
    }
