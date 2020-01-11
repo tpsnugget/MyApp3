@@ -2,7 +2,7 @@
 
 import React, { Component } from "react"
 import { store } from "../../../../store"
-import { getBeerData } from "../../../../actions"
+import { getOneBeerData } from "../../../../actions"
 import { chosenId } from "../../../../actions"
 import axios from "axios"
 import PropTypes from "prop-types"
@@ -20,14 +20,6 @@ class Beer extends Component {
       name: PropTypes.string
    }
 
-   constructor(props) {
-      super(props)
-      this.state = {
-         // chosenId: "",
-         data: []
-      }
-   }
-
    handleShow = (name, id) => {
       store.dispatch(chosenId(id))
 
@@ -42,10 +34,7 @@ class Beer extends Component {
             if (response.data === "") {
                console.log("axios.get not in the db")
             } else {
-               this.setState({
-                  data: response.data[0]
-               })
-               store.dispatch(getBeerData(response.data[0]))
+               store.dispatch(getOneBeerData(response.data[0]))
             }
          })
          .catch((err) => console.log(err))
@@ -53,12 +42,10 @@ class Beer extends Component {
 
    render() {
 
-      // const { data } = this.state
-      const { addedBy } = this.state.data
       const { name } = this.props
-      const { beerData, chosenId, username } = store.getState()
+      const { oneBeerData, chosenId, username } = store.getState()
+      const addedBy = oneBeerData.addedBy
 
-      // console.log("beerData: ", beerData)
 
       const allowedToModifySelection = (addedBy === username ? true : false)
 
@@ -69,7 +56,7 @@ class Beer extends Component {
                <div className="Beer-inner-container">
                   <Mininavbar name={name} chosenId={chosenId} allowedToModifySelection={allowedToModifySelection} />
                   <div>
-                     {(chosenId !== "") && <BeerShow data={beerData} />}
+                     {(chosenId !== "") && <BeerShow data={oneBeerData} />}
                   </div>
                   <div className="Beer-cancel">
                      <CancelLink />

@@ -2,7 +2,7 @@
 
 import React, { Component } from "react"
 import { Redirect } from "react-router-dom"
-import { store } from "../../../../store"
+// import { store } from "../../../../store"
 import { CancelLink } from "../../../Atoms/CancelLink/CancelLink"
 import { SnackbarGreen } from "../../../Atoms/SnackbarGreen/SnackbarGreen"
 import { SnackbarRed } from "../../../Atoms/SnackbarRed/SnackbarRed"
