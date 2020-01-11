@@ -60,10 +60,10 @@ export default (state, action) => {
       }
 
       case "GET_ONE_BEER_DATA":
-      // console.log("GET_BEER_DATA: ", action.beerData)
+      // console.log("GET_ONE_BEER_DATA: ", action.oneBeerData)
       return {
          ...state,
-         oneBeerData: action.beerData
+         oneBeerData: action.oneBeerData
       }
 
       default:

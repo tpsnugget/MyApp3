@@ -4,10 +4,14 @@ import "../css/BeerShow.css"
 
 class BeerShow extends Component {
 
+   static defaultProps = {
+      data: {}
+   }
+
    static propTypes = {
       /* Passed down from Beer.js
          Used here to show all the data for one selected BEER */
-      data: PropTypes.array
+      data: PropTypes.object
    }
 
    render() {
