@@ -1,6 +1,9 @@
 /* DESTINATION LANDING PAGE */
 
 import React, { Component } from "react"
+import { store } from "../../../../store"
+import { getOneDestinationData } from "../../../../actions"
+import { chosenId } from "../../../../actions"
 import axios from "axios"
 import PropTypes from "prop-types"
 import Sidebar from "../../../Sidebar"
@@ -15,11 +18,6 @@ class Destination extends Component {
    static propTypes = {
       /* name (Destination) comes from App.js, sent to Sidebar and Mininavbar */
       name: PropTypes.string,
-
-      /* Passed down from App.js. Used to determine if active user is the one
-         who added the selected BEER to the db. They are the only one who can
-         Edit or Delete the selected BEER. */
-      loggedInName: PropTypes.string
    }
 
    constructor(props) {
@@ -28,13 +26,10 @@ class Destination extends Component {
          chosenId: "",
          data: []
       }
-      this.handleShow = this.handleShow.bind(this)
    }
 
-   handleShow(name, id) {
-      this.setState({
-         chosenId: id
-      })
+   handleShow = (name, id) => {
+      store.dispatch(chosenId(id))
 
       const url = `http://localhost:9000/${name.toLowerCase()}`
 
@@ -47,9 +42,7 @@ class Destination extends Component {
             if (response.data === "") {
                console.log("axios.get not in the db")
             } else {
-               this.setState({
-                  data: response.data[0]
-               })
+               store.dispatch(getOneDestinationData(response.data[0]))
             }
          })
          .catch((err) => console.log(err))
@@ -57,11 +50,12 @@ class Destination extends Component {
 
    render() {
 
-      const { chosenId, data } = this.state
-      const { addedBy } = this.state.data
-      const { loggedInName, name } = this.props
+      const { name } = this.props
+      const { oneDestinationData, chosenId, username } = store.getState()
+      const addedBy = oneDestinationData.addedBy
 
-      const allowedToModifySelection = (addedBy === loggedInName ? true : false)
+
+      const allowedToModifySelection = (addedBy === username ? true : false)
 
       return (
          <div className="Destination-main-container">
@@ -70,8 +64,7 @@ class Destination extends Component {
                <div className="Destination-inner-container">
                   <Mininavbar name={name} chosenId={chosenId} allowedToModifySelection={allowedToModifySelection} />
                   <div>
-                  {(chosenId !== "") && <DestinationShow data={data} />}
-                     {/* {(chosenId !== "") && <BeerShow data={data} />} */}
+                  {(chosenId !== "") && <DestinationShow data={oneDestinationData} />}
                   </div>
                   <div className="Destination-cancel">
                      <CancelLink />
