@@ -3,8 +3,8 @@ import { store } from "../store"
 import { getBeerData } from "../actions"
 import { getDestinationData } from "../actions"
 import { getRecipeData } from "../actions"
-// import { getRestaurantData } from "../actions"
-// import { getRVData } from "../actions"
+import { getRestaurantData } from "../actions"
+import { getRVData } from "../actions"
 import axios from "axios"
 import PropTypes from "prop-types"
 import "../css/Sidebar.css"
@@ -58,8 +58,8 @@ class Sidebar extends Component{
                if(this.props.name === "Beer"){store.dispatch(getBeerData(response.data))}
                if(this.props.name === "Destination"){store.dispatch(getDestinationData(response.data))}
                if(this.props.name === "Recipe"){store.dispatch(getRecipeData(response.data))}
-               // if(this.props.name === "Restaurant"){store.dispatch(getRestaurantData(response.data))}
-               // if(this.props.name === "RV"){store.dispatch(getRVData(response.data))}
+               if(this.props.name === "Restaurant"){store.dispatch(getRestaurantData(response.data))}
+               if(this.props.name === "RV"){store.dispatch(getRVData(response.data))}
             }
          })
          .catch((err) => console.log(err))

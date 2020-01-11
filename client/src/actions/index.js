@@ -90,3 +90,31 @@ export function getOneRecipeData(oneRecipeData){
       oneRecipeData: oneRecipeData
    }
 }
+
+export function getRestaurantData(restaurantData){
+   return {
+      type: "GET_RESTAURANT_DATA",
+      restaurantData: restaurantData
+   }
+}
+
+export function getOneRestaurantData(oneRestaurantData){
+   return {
+      type: "GET_ONE_RESTAURANT_DATA",
+      oneRestaurantData: oneRestaurantData
+   }
+}
+
+export function getRVData(rvData){
+   return {
+      type: "GET_RV_DATA",
+      rvData: rvData
+   }
+}
+
+export function getOneRVData(oneRVData){
+   return {
+      type: "GET_ONE_RV_DATA",
+      oneRVData: oneRVData
+   }
+}
