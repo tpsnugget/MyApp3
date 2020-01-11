@@ -1,9 +1,12 @@
-var express = require('express');
+var express = require('express'),
+  mongoose = require("mongoose")
 var router = express.Router();
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
+const options = {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+}
+
+mongoose.connect("mongodb://localhost:27017/MyAppDB", options)
 
 module.exports = router;

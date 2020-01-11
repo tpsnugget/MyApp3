@@ -1,0 +1,8 @@
+.Recipe-nav-container {
+   display: flex;
+}
+
+.Recipe-inner-container {
+   display: block;
+   width: 100%;
+}

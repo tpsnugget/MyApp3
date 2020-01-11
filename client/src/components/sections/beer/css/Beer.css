@@ -1,0 +1,8 @@
+.Beer-nav-container {
+   display: flex;
+}
+
+.Beer-inner-container {
+   display: block;
+   width: 100%;
+}

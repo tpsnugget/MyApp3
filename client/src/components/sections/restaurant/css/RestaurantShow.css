@@ -1,0 +1,22 @@
+.RestaurantShow-main-container {
+   width: 100%;
+}
+
+.RestaurantShow-upper-container {
+   display: flex;
+}
+
+.RestaurantShow-left-container {
+   width: 60%;
+   text-align: left;
+   margin-left: 2rem;
+}
+
+.RestaurantShow-right-container {
+   width: 40%;
+   margin-right: 2rem;
+}
+
+.RestaurantShow-img {
+   width: 100%;
+}

@@ -1,0 +1,8 @@
+.Restaurant-nav-container {
+   display: flex;
+}
+
+.Restaurant-inner-container {
+   display: block;
+   width: 100%;
+}

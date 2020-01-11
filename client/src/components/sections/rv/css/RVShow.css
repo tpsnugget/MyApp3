@@ -1,0 +1,27 @@
+.RVShow-main-container {
+   width: 100%;
+}
+
+.RVShow-upper-container {
+   display: flex;
+}
+
+.RVShow-left-container {
+   width: 60%;
+   text-align: left;
+   margin-left: 2rem;
+}
+
+.RVShow-right-container {
+   width: 40%;
+   margin-right: 2rem;
+}
+
+.RVShow-img {
+   width: 100%;
+}
+
+.RVShow-lower-container {
+   text-align: left;
+   margin-left: 2rem;
+}

@@ -1,0 +1,27 @@
+.RecipeShow-main-container {
+   width: 100%;
+}
+
+.RecipeShow-upper-container {
+   display: flex;
+}
+
+.RecipeShow-left-container {
+   width: 60%;
+   text-align: left;
+   margin-left: 2rem;
+}
+
+.RecipeShow-right-container {
+   width: 40%;
+   margin-right: 2rem;
+}
+
+.RecipeShow-img {
+   width: 100%;
+}
+
+.RecipeShow-lower-container {
+   text-align: left;
+   margin-left: 2rem;
+}

@@ -1,0 +1,55 @@
+.RestaurantNew-main-container {
+   margin-top: 32px;
+}
+
+.RestaurantNew-form-container {
+   width: 65%;
+   border: 1px solid rgba(3, 87, 3, 0.90);
+   background-color: rgba(3, 87, 3, 0.05);
+   margin: 32px 32px 8px 32px;
+   border-radius: 4px;
+}
+
+.RestaurantNew-submit-button {
+   margin-left: 16px;
+}
+
+.RestaurantNew-div-row {
+   display: flex;
+}
+
+.RestaurantNew-label {
+   margin: 8px 16px;
+   text-align: start;
+}
+
+.RestaurantNew-span {
+   margin-left: 4px;
+}
+
+.RestaurantNew-input {
+   width: 250px;
+   margin-left: 0;
+}
+
+.RestaurantNew-input-address {
+   width: 532px;
+}
+
+.RestaurantNew-input-image {
+   width: 826px;
+}
+
+.RestaurantNew-select {
+   width: 250px;
+   height: 39px;
+   margin: 8px 0;
+   font-size: 1.0rem;
+   font-weight: 500;
+   background-color: white;
+}
+
+.RestaurantNew-input-short {
+   width: 145px;
+   margin-left: 16px;
+}
