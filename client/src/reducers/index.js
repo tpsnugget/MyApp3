@@ -80,6 +80,20 @@ export default (state, action) => {
          oneDestinationData: action.oneDestinationData
       }
 
+      case "GET_RECIPE_DATA":
+      // console.log("GET_RECIPE_DATA: ", action.recipeData)
+      return {
+         ...state,
+         recipeData: action.recipeData
+      }
+
+      case "GET_ONE_RECIPE_DATA":
+      // console.log("GET_ONE_RECIPE_DATA: ", action.oneRecipeData)
+      return {
+         ...state,
+         oneRecipeData: action.oneRecipeData
+      }
+
       default:
       return state
    }
