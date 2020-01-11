@@ -4,6 +4,10 @@ import "../css/RecipeShow.css"
 
 class RecipeShow extends Component {
 
+   static defaultProps = {
+      data: {}
+   }
+
    static propTypes = {
       /* Passed down from Recipe.js
          Used here to show all the data for one selected RECIPE */

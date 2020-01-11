@@ -1,6 +1,9 @@
 /* RECIPE LANDING PAGE */
 
 import React, { Component } from "react"
+import { store } from "../../../../store"
+import { getOneRecipeData } from "../../../../actions"
+import { chosenId } from "../../../../actions"
 import axios from "axios"
 import PropTypes from "prop-types"
 import Sidebar from "../../../Sidebar"
@@ -14,27 +17,11 @@ class Recipe extends Component{
 
    static propTypes = {
       /* name (Recipe) comes from App.js, sent to Sidebar and Mininavbar */
-      name: PropTypes.string,
-
-      /* Passed down from App.js. Used to determine if active user is the one
-         who added the selected RECIPE to the db. They are the only one who can
-         Edit or Delete the selected RECIPE. */
-      loggedInName: PropTypes.string
-   }
-
-   constructor(props){
-      super(props)
-      this.state = {
-         chosenId: "",
-         data: []
-      }
-      this.handleShow = this.handleShow.bind(this)
+      name: PropTypes.string
    }
 
    handleShow(name, id) {
-      this.setState({
-         chosenId: id
-      })
+      store.dispatch(chosenId(id))
 
       const url = `http://localhost:9000/${name.toLowerCase()}`
 
@@ -47,9 +34,8 @@ class Recipe extends Component{
             if (response.data === "") {
                console.log("axios.get not in the db")
             } else {
-               this.setState({
-                  data: response.data[0]
-               })
+               // console.log("response.data[0] ", response.data[0])
+               store.dispatch(getOneRecipeData(response.data[0]))
             }
          })
          .catch((err) => console.log(err))
@@ -57,11 +43,11 @@ class Recipe extends Component{
 
    render(){
 
-      const { chosenId, data } = this.state
-      const { addedBy } = this.state.data
-      const { loggedInName, name } = this.props
+      const { name } = this.props
+      const { oneRecipeData, chosenId, username } = store.getState()
+      const addedBy = oneRecipeData.addedBy
 
-      const allowedToModifySelection = (addedBy === loggedInName ? true : false)
+      const allowedToModifySelection = (addedBy === username ? true : false)
 
       return(
          <div className="Recipe-main-container">
@@ -70,7 +56,7 @@ class Recipe extends Component{
                <div className="Recipe-inner-container">
                   <Mininavbar name={name} chosenId={chosenId} allowedToModifySelection={allowedToModifySelection} />
                   <div>
-                     {(chosenId !== "") && <RecipeShow data={data} />}
+                     {(chosenId !== "") && <RecipeShow data={oneRecipeData} />}
                   </div>
                   <div className="Recipe-cancel">
                      <CancelLink />

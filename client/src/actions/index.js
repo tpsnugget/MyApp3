@@ -76,3 +76,17 @@ export function getOneDestinationData(oneDestinationData){
       oneDestinationData: oneDestinationData
    }
 }
+
+export function getRecipeData(recipeData){
+   return {
+      type: "GET_RECIPE_DATA",
+      recipeData: recipeData
+   }
+}
+
+export function getOneRecipeData(oneRecipeData){
+   return {
+      type: "GET_ONE_RECIPE_DATA",
+      oneRecipeData: oneRecipeData
+   }
+}
