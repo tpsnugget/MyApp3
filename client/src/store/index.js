@@ -2,14 +2,20 @@ import { createStore } from "redux"
 import reducer from "../reducers"
 
 const initialState = {
-   isLoggedIn: false,
-   loggedInName: "",
-   username: "",
    chosenId: "",
+   email: "",
+   first: "",
+   goodLogin: false,
+   isLoggedIn: false,
+   last: "",
+   loggedInName: "",
    oneBeerData: {},
    oneDestinationData: {},
    oneRecipeData: {},
    oneRestaurantData: {},
-   oneRVData: {}
+   oneRVData: {},
+   password: "",
+   password2: "",
+   username: ""
 }
 export const store = createStore(reducer, initialState)

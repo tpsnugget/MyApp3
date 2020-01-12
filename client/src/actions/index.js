@@ -12,10 +12,50 @@ export function logoutUser(){
    }
 }
 
+export function updateUserInfo(first, last, username, email, password, password2){
+   return {
+   type: "UPDATE_USER_INFO",
+   first: first,
+   last: last,
+   username: username,
+   email: email,
+   password: password,
+   password2: password2
+   }
+}
+
+export function handleEmailChange(e){
+   return {
+      type: "HANDLE_EMAIL_CHANGE",
+      email: e.target.value
+   }
+}
+
+export function handleFirstNameChange(e){
+   return {
+      type: "HANDLE_FIRST_NAME_CHANGE",
+      first: e.target.value
+   }
+}
+
+export function handleLastNameChange(e){
+   return {
+      type: "HANDLE_LAST_NAME_CHANGE",
+      last: e.target.value
+   }
+}
+
 export function handlePasswordChange(e){
    return {
       type: "HANDLE_PASSWORD_CHANGE",
       password: e.target.value
+   }
+}
+
+export function handlePassword2Change(e){
+   return {
+      type: "HANDLE_PASSWORD2_CHANGE",
+      password2: e.target.value
    }
 }
 
