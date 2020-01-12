@@ -59,10 +59,22 @@ export function handlePassword2Change(e){
    }
 }
 
+// To delete
 export function handleUsernameChange(e){
+   console.log("handleChange e.target.name", e.target.name)
    return {
-      type: "HANDLE_USERNAME_CHANGE",
-      username: e.target.value
+      type: "HANDLE_CHANGE",
+      [e.target.name]: e.target.value,
+      name: [e.target.name]
+   }
+}
+
+// To keep
+export function handleChange(e){
+   return {
+      type: "HANDLE_CHANGE",
+      label: e.target.name,
+      value: e.target.value
    }
 }
 

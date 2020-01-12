@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react"
 import { Redirect } from "react-router-dom"
 import { store } from "../store"
-import { handlePasswordChange, handleUsernameChange, loginUser, snackBarGreenOpen,
+import { handleChange, loginUser, snackBarGreenOpen,
          snackBarRedOpen } from "../actions"
 import { SnackbarGreen } from "./Atoms/SnackbarGreen/SnackbarGreen"
 import { SnackbarRed } from "./Atoms/SnackbarRed/SnackbarRed"
@@ -10,14 +10,12 @@ import { Button } from "./Atoms/Button/Button"
 import axios from "axios"
 import "../css/Login.css"
 
+var goodLogin = false
+
 class Login extends Component {
 
-   handlePasswordChange = (e) => {
-      store.dispatch(handlePasswordChange(e))
-   }
-
-   handleUsernameChange = (e) => {
-      store.dispatch(handleUsernameChange(e))
+   handleChange = (e) => {
+      store.dispatch(handleChange(e))
    }
 
    handleSubmit = (e) => {
@@ -35,6 +33,7 @@ class Login extends Component {
             if (response.data._id) {
                if (response.data.password === password) {
                   store.dispatch(snackBarGreenOpen(true, "Login was successful"))
+                  goodLogin = true
                   setTimeout(() => {
                      store.dispatch(loginUser(password, username.toLowerCase()))
 
@@ -63,7 +62,7 @@ class Login extends Component {
 
    render() {
 
-      const { goodLogin, msg, snackBarGreenOpen, snackBarRedOpen } = store.getState()
+      const { msg, snackBarGreenOpen, snackBarRedOpen } = store.getState()
 
       return (
          <Fragment>
@@ -76,8 +75,8 @@ class Login extends Component {
                   <form action="" method="get" onSubmit={this.handleSubmit}>
 
                      <div className="Login-row">
-                        <InputText type="text" label="Username:" name="username" placeholder="Username" handleChange={this.handleUsernameChange}/>
-                        <InputText type="password" label="Password:" name="password" placeholder="Password" handleChange={this.handlePasswordChange}/>                   
+                        <InputText type="text" label="Username:" name="username" placeholder="Username" handleChange={this.handleChange}/>
+                        <InputText type="password" label="Password:" name="password" placeholder="Password" handleChange={this.handleChange}/>                   
                      </div>
 
                      <Button label="Submit" />

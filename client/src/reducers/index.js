@@ -6,8 +6,7 @@ export default (state, action) => {
          ...state,
          password: action.password,
          username: action.username,
-         isLoggedIn: true,
-         goodLogin: true
+         isLoggedIn: true
       }
 
       case "LOGOUT_USER":
@@ -63,11 +62,10 @@ export default (state, action) => {
          password2: action.password2
       }
 
-      case "HANDLE_USERNAME_CHANGE":
-      // console.log("HANDLE_USERNAME_CHANGE ", action.username)
+      case "HANDLE_CHANGE":
       return {
          ...state,
-         username: action.username
+         [action.label]: action.value
       }
 
       case "SNACK_BAR_GREEN_OPEN":

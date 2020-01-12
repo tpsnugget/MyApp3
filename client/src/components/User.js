@@ -1,8 +1,6 @@
 import React, { Component, Fragment } from "react"
 import { store } from "../store"
-import { handleEmailChange, handleFirstNameChange, handleLastNameChange, handlePasswordChange, 
-   handlePassword2Change, handleUsernameChange, snackBarGreenOpen, snackBarRedOpen,
-   updateUserInfo } from "../actions"
+import { handleChange, snackBarGreenOpen, snackBarRedOpen, updateUserInfo } from "../actions"
 import { Redirect } from "react-router-dom"
 import { SnackbarGreen } from "./Atoms/SnackbarGreen/SnackbarGreen"
 import { SnackbarRed } from "./Atoms/SnackbarRed/SnackbarRed"
@@ -15,28 +13,8 @@ var goodSignUp = false
 
 class User extends Component {
 
-   handleEmailChange = (e) => {
-      store.dispatch(handleEmailChange(e))
-   }
-
-   handleFirstNameChange = (e) => {
-      store.dispatch(handleFirstNameChange(e))
-   }
-
-   handleLastNameChange = (e) => {
-      store.dispatch(handleLastNameChange(e))
-   }
-
-   handlePasswordChange = (e) => {
-      store.dispatch(handlePasswordChange(e))
-   }
-
-   handlePassword2Change = (e) => {
-      store.dispatch(handlePassword2Change(e))
-   }
-
-   handleUsernameChange = (e) => {
-      store.dispatch(handleUsernameChange(e))
+   handleChange = (e) => {
+      store.dispatch(handleChange(e))
    }
 
    handleSubmit = (e) => {
@@ -105,18 +83,18 @@ class User extends Component {
                   <form onSubmit={this.handleSubmit}>
 
                      <div className="User-row">
-                     <InputText type="text" label="First Name:" name="first" placeholder="First Name" handleChange={this.handleFirstNameChange} />
-                     <InputText type="text" label="Last Name:" name="last" placeholder="Last Name" handleChange={this.handleLastNameChange} />
+                     <InputText type="text" label="First Name:" name="first" placeholder="First Name" handleChange={this.handleChange} />
+                     <InputText type="text" label="Last Name:" name="last" placeholder="Last Name" handleChange={this.handleChange} />
                      </div>
 
                      <div className="User-row">
-                     <InputText type="text" label="Username:" name="username" placeholder="Username" handleChange={this.handleUsernameChange} />
-                     <InputText type="email" label="Email:" name="email" placeholder="Email" handleChange={this.handleEmailChange} />
+                     <InputText type="text" label="Username:" name="username" placeholder="Username" handleChange={this.handleChange} />
+                     <InputText type="email" label="Email:" name="email" placeholder="Email" handleChange={this.handleChange} />
                      </div>
 
                      <div className="User-row">
-                     <InputText type="password" label="Password:" name="password" placeholder="Password" handleChange={this.handlePasswordChange} />
-                     <InputText type="password" label="Re-Enter Password:" name="password2" placeholder="Password" handleChange={this.handlePassword2Change} />
+                     <InputText type="password" label="Password:" name="password" placeholder="Password" handleChange={this.handleChange} />
+                     <InputText type="password" label="Re-Enter Password:" name="password2" placeholder="Password" handleChange={this.handleChange} />
                      </div>
                      <Button label="Submit"/>
                   </form>
