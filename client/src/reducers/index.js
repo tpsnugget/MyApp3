@@ -17,11 +17,50 @@ export default (state, action) => {
          isLoggedIn: false
       }
 
+      case "UPDATE_USER_INFO":
+      return {
+         first: action.first,
+         last: action.last,
+         username: action.username,
+         email: action.email,
+         password: action.password,
+         password2: action.password2,
+         goodSignUp: true
+      }
+
+      case "HANDLE_EMAIL_CHANGE":
+      // console.log("HANDLE_EMAIL_CHANGE ", action.email)
+      return {
+         ...state,
+         email: action.email
+      }
+
+      case "HANDLE_FIRST_NAME_CHANGE":
+      // console.log("HANDLE_FIRST_NAME_CHANGE ", action.first)
+      return {
+         ...state,
+         first: action.first
+      }
+
+      case "HANDLE_LAST_NAME_CHANGE":
+      // console.log("HANDLE_LAST_NAME_CHANGE ", action.last)
+      return {
+         ...state,
+         last: action.last
+      }
+
       case "HANDLE_PASSWORD_CHANGE":
       // console.log("HANDLE_PASSWORD_CHANGE ", action.password)
       return {
          ...state,
          password: action.password
+      }
+
+      case "HANDLE_PASSWORD2_CHANGE":
+      // console.log("HANDLE_PASSWORD2_CHANGE ", action.password2)
+      return {
+         ...state,
+         password2: action.password2
       }
 
       case "HANDLE_USERNAME_CHANGE":
