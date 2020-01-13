@@ -18,35 +18,35 @@ export default (state, action) => {
       // console.log("GET_BEER_DATA: ", action.beerData)
       return {
          ...state,
-         beerData: action.beerData
+         data: action.beerData
       }
 
       case "GET_DESTINATION_DATA":
       // console.log("GET_DESTINATION_DATA: ", action.destinationData)
       return {
          ...state,
-         destinationData: action.destinationData
+         data: action.destinationData
       }
 
       case "GET_RECIPE_DATA":
       // console.log("GET_RECIPE_DATA: ", action.recipeData)
       return {
          ...state,
-         recipeData: action.recipeData
+         data: action.recipeData
       }
 
       case "GET_RESTAURANT_DATA":
       // console.log("GET_RESTAURANT_DATA: ", action.restaurantData)
       return {
          ...state,
-         restaurantData: action.restaurantData
+         data: action.restaurantData
       }
 
       case "GET_RV_DATA":
       // console.log("GET_RV_DATA: ", action.rvData)
       return {
          ...state,
-         rvData: action.rvData
+         data: action.rvData
       }
 
       case "GET_ONE_BEER_DATA":

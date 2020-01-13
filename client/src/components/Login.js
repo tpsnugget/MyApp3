@@ -1,8 +1,7 @@
 import React, { Component, Fragment } from "react"
 import { Redirect } from "react-router-dom"
 import { store } from "../store"
-import { handleChange, loginUser, snackBarGreenOpen,
-         snackBarRedOpen } from "../actions"
+import { handleChange, loginUser, snackBarGreenOpen, snackBarRedOpen } from "../actions"
 import { SnackbarGreen } from "./Atoms/SnackbarGreen/SnackbarGreen"
 import { SnackbarRed } from "./Atoms/SnackbarRed/SnackbarRed"
 import {InputText } from "./Atoms/InputText/InputText"

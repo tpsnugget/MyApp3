@@ -1,10 +1,6 @@
 import React, { Component } from "react"
 import { store } from "../store"
-import { getBeerData } from "../actions"
-import { getDestinationData } from "../actions"
-import { getRecipeData } from "../actions"
-import { getRestaurantData } from "../actions"
-import { getRVData } from "../actions"
+import { getBeerData, getDestinationData, getRecipeData, getRestaurantData, getRVData } from "../actions"
 import axios from "axios"
 import PropTypes from "prop-types"
 import "../css/Sidebar.css"
@@ -17,24 +13,15 @@ class Sidebar extends Component{
          for axios */
       name: PropTypes.string,
 
-      /* Passed down from one of the four main landing pages
-         (Beer, Recipe, Restaurant, RV), used to identify which item in the
+      /* Passed down from one of the five main landing pages
+         (Beer, Destination, Recipe, Restaurant, RV), used to identify which item in the
          Sidebar was selected for Display, Edit, or Delete operations. Gets
          passed back to the Parent main landing page component. */
       select: PropTypes.func
    }
 
-   constructor(props){
-      super(props)
-      this.state = {
-         data: []
-      }
-      this.handleClick = this.handleClick.bind(this)
-   }
-
-   handleClick(e){
+   handleClick = (e) => {
       e.preventDefault()
-      // console.log("Sidebar e.target.id: ", e.target.id)
       this.props.select(this.props.name, e.target.id)
    }
 
@@ -43,18 +30,11 @@ class Sidebar extends Component{
       const url = `http://localhost:9000/${this.props.name.toLowerCase()}`
 
       axios.get(url, {
-         params: { 
-
-          }
       })
          .then((response) => {
             if (response.data === "") {
                console.log("axios.get not in the db")
             } else {
-               // console.log("axios.get /beer params: {}, response: ", response)
-               this.setState({
-                  data: response.data
-               })
                if(this.props.name === "Beer"){store.dispatch(getBeerData(response.data))}
                if(this.props.name === "Destination"){store.dispatch(getDestinationData(response.data))}
                if(this.props.name === "Recipe"){store.dispatch(getRecipeData(response.data))}
@@ -67,11 +47,13 @@ class Sidebar extends Component{
 
    render(){
 
-      this.state.data.sort( (a, b) => {
+      var { data } = store.getState()
+
+      data.sort( (a, b) => {
          return a.name.localeCompare(b.name)
       } )
 
-      const display = this.state.data.map( (item, i) => {
+      const display = data.map( (item, i) => {
 
          // Multiple id's are used below. I tried adding it only to the outer div,
          // but clicking on an interior element that did not have the id also included
@@ -86,7 +68,7 @@ class Sidebar extends Component{
                   alt={item.name}
                   className="Sidebar-img"
                />
-               {i < this.state.data.length - 1 ? <hr /> : ""}
+               {i < data.length - 1 ? <hr /> : ""}
             </div>
          )
       } )

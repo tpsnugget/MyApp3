@@ -10,6 +10,7 @@ const initialState = {
    brewery: "",
    chosenId: "",
    city: "",
+   data: [],
    email: "",
    first: "",
    glassware: "",
