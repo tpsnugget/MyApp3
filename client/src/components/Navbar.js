@@ -1,6 +1,7 @@
 import React from "react"
 import { Link } from "react-router-dom"
 import { store } from "../store"
+import { logoutUser } from "../actions"
 import PropTypes from "prop-types"
 import "../css/Navbar.css"
 
@@ -34,3 +35,5 @@ export const Navbar = ({ logout }) => {
       </div >
    )
 }
+
+store.dispatch(logoutUser())
