@@ -10,8 +10,6 @@ import { Button } from "./Atoms/Button/Button"
 import axios from "axios"
 import "../css/Login.css"
 
-var goodLogin = false
-
 class Login extends Component {
 
    handleChange = (e) => {
@@ -33,7 +31,6 @@ class Login extends Component {
             if (response.data._id) {
                if (response.data.password === password) {
                   store.dispatch(snackBarGreenOpen(true, "Login was successful"))
-                  goodLogin = true
                   setTimeout(() => {
                      store.dispatch(loginUser(password, username.toLowerCase()))
 
@@ -62,7 +59,7 @@ class Login extends Component {
 
    render() {
 
-      const { msg, snackBarGreenOpen, snackBarRedOpen } = store.getState()
+      const { goodLogin, msg, snackBarGreenOpen, snackBarRedOpen } = store.getState()
 
       return (
          <Fragment>

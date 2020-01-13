@@ -2,7 +2,8 @@
 
 import React, { Component } from "react"
 import { Redirect } from "react-router-dom"
-// import { store } from "../../../../store"
+import { store } from "../../../../store"
+import { addBeerSuccessful, handleChange, snackBarGreenOpen, snackBarRedOpen } from "../../../../actions"
 import { CancelLink } from "../../../Atoms/CancelLink/CancelLink"
 import { SnackbarGreen } from "../../../Atoms/SnackbarGreen/SnackbarGreen"
 import { SnackbarRed } from "../../../Atoms/SnackbarRed/SnackbarRed"
@@ -14,93 +15,54 @@ import { TextArea } from "../../../Atoms/TextArea/TextArea"
 import axios from "axios"
 import "../css/BeerNew.css"
 
-
 class BeerNew extends Component {
 
-   constructor(props) {
-      super(props)
-      this.state = {
-         name: "",
-         brewery: "",
-         streetAddress: "",
-         city: "",
-         state: "",
-         zip: "",
-         phone: "",
-         latitude: "",
-         longitude: "",
-         image: "",
-         website: "",
-         beerType: "",
-         beerColor: "",
-         glassware: "",
-         abv: "",
-         ibu: "",
-         rating: "",
-         notes: "",
-         snackBarGreenOpen: false,
-         snackBarRedOpen: false,
-         msg: "",
-         addBeerSuccessful: false
-      }
-   }
-
    handleChange = (e) => {
-      this.setState({
-         [e.target.name]: e.target.value
-      })
+      store.dispatch(handleChange(e))
    }
 
    handleSubmit = (e) => {
       e.preventDefault()
 
+      const { name, brewery, streetAddress, city, state, zip, phone,
+              latitude, longitude, image, website, beerType, beerColor,
+              glassware, abv, ibu, rating, notes, username } = store.getState()
+
       const newBeer = {
-         name: this.state.name,
-         brewery: this.state.brewery,
-         streetAddress: this.state.streetAddress,
-         city: this.state.city,
-         state: this.state.state,
-         zip: this.state.zip,
-         phone: this.state.phone,
-         latitude: this.state.latitude,
-         longitude: this.state.longitude,
-         image: this.state.image,
-         website: this.state.website,
-         beerType: this.state.beerType,
-         beerColor: this.state.beerColor,
-         glassware: this.state.glassware,
-         abv: this.state.abv,
-         ibu: this.state.ibu,
-         rating: this.state.rating,
-         notes: this.state.notes,
-         addedBy: this.props.username
+         name: name,
+         brewery: brewery,
+         streetAddress: streetAddress,
+         city: city,
+         state: state,
+         zip: zip,
+         phone: phone,
+         latitude: latitude,
+         longitude: longitude,
+         image: image,
+         website: website,
+         beerType: beerType,
+         beerColor: beerColor,
+         glassware: glassware,
+         abv: abv,
+         ibu: ibu,
+         rating: rating,
+         notes: notes,
+         addedBy: username
       }
 
       axios.post("http://localhost:9000/beer", newBeer)
          .then((response) => {
             // console.log(response)
             if (response.data.name === "MongoError") {
-               this.setState({
-                  snackBarRedOpen: true,
-                  msg: "Beer was not added..."
-               })
+               store.dispatch(snackBarRedOpen(true, "Beer was not added..."))
                setTimeout(() => {
-                  this.setState({
-                     snackBarRedOpen: false,
-                     msg: ""
-                  })
+                  store.dispatch(snackBarRedOpen(false, ""))
                }, 2000);
             } else {
-               this.setState({
-                  snackBarGreenOpen: true,
-                  msg: "Beer was added!"
-               })
+               store.dispatch(snackBarGreenOpen(true, "Beer was added!"))
                setTimeout(() => {
-                  this.setState({
-                     snackBarGreenOpen: false,
-                     msg: "",
-                     addBeerSuccessful: true
-                  })
+                  store.dispatch(snackBarGreenOpen(false, ""))
+                  store.dispatch(addBeerSuccessful())
                }, 2000);
             }
          })
@@ -109,7 +71,7 @@ class BeerNew extends Component {
 
    render() {
 
-      const { addBeerSuccessful, snackBarGreenOpen, snackBarRedOpen } = this.state
+      const { addBeerSuccessful, msg, snackBarGreenOpen, snackBarRedOpen } = store.getState()
 
       return (
          <div className="BeerNew-main-container">
@@ -239,8 +201,8 @@ class BeerNew extends Component {
                      <TextArea rows="5" cols="89" label="Notes:" name="notes" placeholder="Enter Personal Notes Here" type="text" handleChange={this.handleChange} />
                   </div>
 
-                  {snackBarGreenOpen && <SnackbarGreen msg={this.state.msg} />}
-                  {snackBarRedOpen && <SnackbarRed msg={this.state.msg} />}
+                  {snackBarGreenOpen && <SnackbarGreen msg={msg} />}
+                  {snackBarRedOpen && <SnackbarRed msg={msg} />}
 
                   <div className="BeerNew-div-row BeerNew-submit-button">
                      <Button label="Submit" />

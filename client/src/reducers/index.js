@@ -1,71 +1,117 @@
 export default (state, action) => {
 
    switch(action.type){
-      case "LOGIN_USER":
+
+      case "ADD_BEER_SUCCESSFUL":
       return {
          ...state,
-         password: action.password,
-         username: action.username,
-         isLoggedIn: true
+         addBeerSuccessful: true
       }
 
-      case "LOGOUT_USER":
+      case "CHOSEN_ID":
       return {
          ...state,
-         username: "",
-         isLoggedIn: false
+         chosenId: action.chosenId
       }
 
-      case "UPDATE_USER_INFO":
-      return {
-         first: action.first,
-         last: action.last,
-         username: action.username,
-         email: action.email,
-         password: action.password,
-         password2: action.password2,
-         goodSignUp: true
-      }
-
-      case "HANDLE_EMAIL_CHANGE":
-      // console.log("HANDLE_EMAIL_CHANGE ", action.email)
+      case "GET_BEER_DATA":
+      // console.log("GET_BEER_DATA: ", action.beerData)
       return {
          ...state,
-         email: action.email
+         beerData: action.beerData
       }
 
-      case "HANDLE_FIRST_NAME_CHANGE":
-      // console.log("HANDLE_FIRST_NAME_CHANGE ", action.first)
+      case "GET_DESTINATION_DATA":
+      // console.log("GET_DESTINATION_DATA: ", action.destinationData)
       return {
          ...state,
-         first: action.first
+         destinationData: action.destinationData
       }
 
-      case "HANDLE_LAST_NAME_CHANGE":
-      // console.log("HANDLE_LAST_NAME_CHANGE ", action.last)
+      case "GET_RECIPE_DATA":
+      // console.log("GET_RECIPE_DATA: ", action.recipeData)
       return {
          ...state,
-         last: action.last
+         recipeData: action.recipeData
       }
 
-      case "HANDLE_PASSWORD_CHANGE":
-      // console.log("HANDLE_PASSWORD_CHANGE ", action.password)
+      case "GET_RESTAURANT_DATA":
+      // console.log("GET_RESTAURANT_DATA: ", action.restaurantData)
       return {
          ...state,
-         password: action.password
+         restaurantData: action.restaurantData
       }
 
-      case "HANDLE_PASSWORD2_CHANGE":
-      // console.log("HANDLE_PASSWORD2_CHANGE ", action.password2)
+      case "GET_RV_DATA":
+      // console.log("GET_RV_DATA: ", action.rvData)
       return {
          ...state,
-         password2: action.password2
+         rvData: action.rvData
+      }
+
+      case "GET_ONE_BEER_DATA":
+      // console.log("GET_ONE_BEER_DATA: ", action.oneBeerData)
+      return {
+         ...state,
+         oneBeerData: action.oneBeerData
+      }
+
+      case "GET_ONE_DESTINATION_DATA":
+      // console.log("GET_ONE_DESTINATION_DATA: ", action.oneDestinationData)
+      return {
+         ...state,
+         oneDestinationData: action.oneDestinationData
+      }
+
+      case "GET_ONE_RECIPE_DATA":
+      // console.log("GET_ONE_RECIPE_DATA: ", action.oneRecipeData)
+      return {
+         ...state,
+         oneRecipeData: action.oneRecipeData
+      }
+
+      case "GET_ONE_RESTAURANT_DATA":
+      // console.log("GET_ONE_RESTAURANT_DATA: ", action.oneRestaurantData)
+      return {
+         ...state,
+         oneRestaurantData: action.oneRestaurantData
+      }
+
+      case "GET_ONE_RV_DATA":
+      // console.log("GET_ONE_RV_DATA: ", action.oneRVData)
+      return {
+         ...state,
+         oneRVData: action.oneRVData
+      }
+
+      case "GOOD_DELETE":
+      return {
+         ...state,
+         goodDelete: true,
+         chosenId: ""
       }
 
       case "HANDLE_CHANGE":
       return {
          ...state,
          [action.label]: action.value
+      }
+
+      case "LOGIN_USER":
+      return {
+         ...state,
+         password: action.password,
+         username: action.username,
+         isLoggedIn: true,
+         goodLogin: true
+      }
+
+      case "LOGOUT_USER":
+      return {
+         ...state,
+         username: "",
+         isLoggedIn: false,
+         goodLogin: false
       }
 
       case "SNACK_BAR_GREEN_OPEN":
@@ -83,80 +129,15 @@ export default (state, action) => {
          msg: action.msg
       }
 
-      case "CHOSEN_ID":
+      case "UPDATE_USER_INFO":
       return {
-         ...state,
-         chosenId: action.chosenId
-      }
-
-      case "GET_BEER_DATA":
-      // console.log("GET_BEER_DATA: ", action.beerData)
-      return {
-         ...state,
-         beerData: action.beerData
-      }
-
-      case "GET_ONE_BEER_DATA":
-      // console.log("GET_ONE_BEER_DATA: ", action.oneBeerData)
-      return {
-         ...state,
-         oneBeerData: action.oneBeerData
-      }
-
-      case "GET_DESTINATION_DATA":
-      // console.log("GET_DESTINATION_DATA: ", action.destinationData)
-      return {
-         ...state,
-         destinationData: action.destinationData
-      }
-
-      case "GET_ONE_DESTINATION_DATA":
-      // console.log("GET_ONE_DESTINATION_DATA: ", action.oneDestinationData)
-      return {
-         ...state,
-         oneDestinationData: action.oneDestinationData
-      }
-
-      case "GET_RECIPE_DATA":
-      // console.log("GET_RECIPE_DATA: ", action.recipeData)
-      return {
-         ...state,
-         recipeData: action.recipeData
-      }
-
-      case "GET_ONE_RECIPE_DATA":
-      // console.log("GET_ONE_RECIPE_DATA: ", action.oneRecipeData)
-      return {
-         ...state,
-         oneRecipeData: action.oneRecipeData
-      }
-
-      case "GET_RESTAURANT_DATA":
-      // console.log("GET_RESTAURANT_DATA: ", action.restaurantData)
-      return {
-         ...state,
-         restaurantData: action.restaurantData
-      }
-
-      case "GET_ONE_RESTAURANT_DATA":
-      // console.log("GET_ONE_RESTAURANT_DATA: ", action.oneRestaurantData)
-      return {
-         ...state,
-         oneRestaurantData: action.oneRestaurantData
-      }
-
-      case "GET_RV_DATA":
-      // console.log("GET_RV_DATA: ", action.rvData)
-      return {
-         ...state,
-         rvData: action.rvData
-      }
-
-      case "GET_ONE_RV_DATA":
-      // console.log("GET_ONE_RV_DATA: ", action.oneRVData)
-      return {
-         ...state,
-         oneRVData: action.oneRVData
+         first: action.first,
+         last: action.last,
+         username: action.username,
+         email: action.email,
+         password: action.password,
+         password2: action.password2,
+         goodSignUp: true
       }
 
       default:

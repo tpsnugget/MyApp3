@@ -7,6 +7,7 @@ import { Landing } from "./components/Landing"
 import User from "./components/User"
 import Login from "./components/Login"
 import Delete from "./components/Delete"
+import { NotLoggedInPage } from "./components/NotLoggedInPage"
 import Beer from "./components/sections/beer/components/Beer"
 import BeerNew from "./components/sections/beer/components/BeerNew"
 import BeerEdit from "./components/sections/beer/components/BeerEdit"
@@ -39,6 +40,9 @@ class App extends Component {
         <Navbar username={username} logout={this.logout} />
         <Switch>
 
+          <Route exact path="/">
+            <NotLoggedInPage />
+          </Route>
           <Route exact path="/landing">
             {isLoggedIn && <Landing />}
           </Route>

@@ -1,4 +1,6 @@
 import React, { Component } from "react"
+import { store } from "../store"
+import { goodDelete, snackBarGreenOpen, snackBarRedOpen } from "../actions"
 import { Redirect } from "react-router-dom"
 import { SnackbarGreen } from "./Atoms/SnackbarGreen/SnackbarGreen"
 import { SnackbarRed } from "./Atoms/SnackbarRed/SnackbarRed"
@@ -29,21 +31,25 @@ class Delete extends Component{
       })
          .then((response) => {
             if (response.data.name === "MongoError") {
-               this.setState({
-                  snackBarRedOpen: true,
-                  msg: "Delete was not successfull"
-               })
+               store.dispatch(snackBarRedOpen(true, "Delete was not successfull"))
+               // this.setState({
+               //    snackBarRedOpen: true,
+               //    msg: "Delete was not successfull"
+               // })
             } else {
-               this.setState({
-                  snackBarGreenOpen: true,
-                  msg: "Delete was successful",
-               })
+               store.dispatch(snackBarGreenOpen(true, "Delete was successful"))
+               // this.setState({
+               //    snackBarGreenOpen: true,
+               //    msg: "Delete was successful",
+               // })
                setTimeout(() => {
-                  this.setState({
-                     snackBarGreenOpen: false,
-                     msg: "",
-                     goodDelete: true
-                  })
+                  store.dispatch(snackBarGreenOpen(false, ""))
+                  store.dispatch(goodDelete())
+                  // this.setState({
+                  //    snackBarGreenOpen: false,
+                  //    msg: "",
+                  //    goodDelete: true
+                  // })
                }, 2500);
             }
          })
@@ -52,7 +58,7 @@ class Delete extends Component{
 
    render(){
 
-      const { goodDelete, snackBarGreenOpen, snackBarRedOpen } = this.state
+      const { snackBarGreenOpen, snackBarRedOpen } = this.state
       const { type } = this.props.location.state
 
       const path = `/${type.toLowerCase()}`
