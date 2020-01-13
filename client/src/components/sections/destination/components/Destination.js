@@ -2,7 +2,7 @@
 
 import React, { Component } from "react"
 import { store } from "../../../../store"
-import { getOneDestinationData } from "../../../../actions"
+import { allowedToModifySelection, getOneDestinationData } from "../../../../actions"
 import { chosenId } from "../../../../actions"
 import axios from "axios"
 import PropTypes from "prop-types"
@@ -43,6 +43,9 @@ class Destination extends Component {
                console.log("axios.get not in the db")
             } else {
                store.dispatch(getOneDestinationData(response.data[0]))
+               const { oneDestinationData, username } = store.getState()
+               const { addedBy } = oneDestinationData
+               store.dispatch(allowedToModifySelection(addedBy === username))
             }
          })
          .catch((err) => console.log(err))

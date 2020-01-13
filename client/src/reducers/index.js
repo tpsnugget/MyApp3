@@ -8,10 +8,46 @@ export default (state, action) => {
          addBeerSuccessful: true
       }
 
+      case "ADD_DESTINATION_SUCCESSFUL":
+      return {
+         ...state,
+         addDestinationSuccessful: true
+      }
+
+      case "ADD_RECIPE_SUCCESSFUL":
+      return {
+         ...state,
+         addRecipeSuccessful: true
+      }
+
+      case "ADD_RESTAURANT_SUCCESSFUL":
+      return {
+         ...state,
+         addRestaurantSuccessful: true
+      }
+
+      case "ADD_RV_SUCCESSFUL":
+      return {
+         ...state,
+         addRVSuccessful: true
+      }
+
+      case "ALLOWED_TO_MODIFY_SELECTION":
+      return {
+         ...state,
+         allowedToModifySelection: action.allowedToModifySelection
+      }
+
       case "CHOSEN_ID":
       return {
          ...state,
          chosenId: action.chosenId
+      }
+
+      case "EDIT_PATH":
+      return {
+         ...state,
+         editPath: action.editPath
       }
 
       case "GET_BEER_DATA":
@@ -112,6 +148,12 @@ export default (state, action) => {
          username: "",
          isLoggedIn: false,
          goodLogin: false
+      }
+
+      case "NEW_PATH":
+      return {
+         ...state,
+         newPath: action.newPath
       }
 
       case "SNACK_BAR_GREEN_OPEN":

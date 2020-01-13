@@ -17,7 +17,7 @@ class RestaurantShow extends Component {
    render() {
 
       const { name, streetAddress, city, state, zip, phone, image,
-         website, favFood, cuisine, price, rating, notes } = this.props.data
+         website, favFood, cuisine, price, rating, notes, addedBy } = this.props.data
 
       const address = `${city}, ${state} ${zip}`
 
@@ -38,6 +38,7 @@ class RestaurantShow extends Component {
                   <p><strong>Price:</strong>{" "}{price}</p>
                   <p><strong>Rating:</strong>{" "}{rating}</p>
                   <p><strong>Notes:</strong>{" "}{notes}</p>
+                  <p>Added By: {addedBy}</p>
                </div>
                <div className="RestaurantShow-right-container">
                   <img src={image} alt={name} className="RestaurantShow-img" />

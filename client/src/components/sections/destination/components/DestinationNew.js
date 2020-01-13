@@ -2,6 +2,8 @@
 
 import React, { Component } from "react"
 import { Redirect } from "react-router-dom"
+import { store } from "../../../../store"
+import { addDestinationSuccessful, handleChange, snackBarGreenOpen, snackBarRedOpen } from "../../../../actions"
 import PropTypes from "prop-types"
 import { CancelLink } from "../../../Atoms/CancelLink/CancelLink"
 import { SnackbarGreen } from "../../../Atoms/SnackbarGreen/SnackbarGreen"
@@ -23,93 +25,101 @@ class DestinationNew extends Component {
       loggedInName: PropTypes.string
    }
 
-   constructor(props) {
-      super(props)
-      this.state = {
-         name: "",
-         streetAddress: "",
-         city: "",
-         state: "",
-         locationCode: "",
-         airportCode: "",
-         country: "",
-         continent: "",
-         phone: "",
-         latitude: "",
-         longitude: "",
-         image: "",
-         website: "",
-         rating: "",
-         personalNotes: "",
-         pubNotes: "",
-         restaurantNotes: "",
-         sightNotes: "",
-         tourNotes: "",
-         snackBarGreenOpen: false,
-         snackBarRedOpen: false,
-         msg: "",
-         addDestinationSuccessful: false
-      }
-      this.handleChange = this.handleChange.bind(this)
-      this.handleSubmit = this.handleSubmit.bind(this)
+   // constructor(props) {
+   //    super(props)
+   //    this.state = {
+   //       name: "",
+   //       streetAddress: "",
+   //       city: "",
+   //       state: "",
+   //       locationCode: "",
+   //       airportCode: "",
+   //       country: "",
+   //       continent: "",
+   //       phone: "",
+   //       latitude: "",
+   //       longitude: "",
+   //       image: "",
+   //       website: "",
+   //       rating: "",
+   //       personalNotes: "",
+   //       pubNotes: "",
+   //       restaurantNotes: "",
+   //       sightNotes: "",
+   //       tourNotes: "",
+   //       snackBarGreenOpen: false,
+   //       snackBarRedOpen: false,
+   //       msg: "",
+   //       addDestinationSuccessful: false
+   //    }
+   //    this.handleChange = this.handleChange.bind(this)
+   //    this.handleSubmit = this.handleSubmit.bind(this)
+   // }
+
+   handleChange = (e) => {
+      store.dispatch(handleChange(e))
    }
 
-   handleChange(e) {
-      this.setState({
-         [e.target.name]: e.target.value
-      })
-   }
-
-   handleSubmit(e) {
+   handleSubmit = (e) => {
       e.preventDefault()
 
+      const { name, streetAddress, city, state, locationCode, airportCode, country,
+              continent, phone, latitude, longitude, image, website, rating,
+              personalNotes, pubNotes, restaurantNotes, sightNotes, tourNotes,
+              username } = store.getState()
+
       const newDestination = {
-         name: this.state.name,
-         streetAddress: this.state.streetAddress,
-         city: this.state.city,
-         state: this.state.state,
-         locationCode: this.state.locationCode,
-         airportCode: this.state.airportCode,
-         country: this.state.country,
-         continent: this.state.continent,
-         phone: this.state.phone,
-         latitude: this.state.latitude,
-         longitude: this.state.longitude,
-         image: this.state.image,
-         website: this.state.website,
-         rating: this.state.rating,
-         personalNotes: this.state.personalNotes,
-         pubNotes: this.state.pubNotes,
-         restaurantNotes: this.state.restaurantNotes,
-         sightNotes: this.state.sightNotes,
-         tourNotes: this.state.tourNotes,
-         addedBy: this.props.username
+         name: name,
+         streetAddress: streetAddress,
+         city: city,
+         state: state,
+         locationCode: locationCode,
+         airportCode: airportCode,
+         country: country,
+         continent: continent,
+         phone: phone,
+         latitude: latitude,
+         longitude: longitude,
+         image: image,
+         website: website,
+         rating: rating,
+         personalNotes: personalNotes,
+         pubNotes: pubNotes,
+         restaurantNotes: restaurantNotes,
+         sightNotes: sightNotes,
+         tourNotes: tourNotes,
+         addedBy: username
       }
 
       axios.post("http://localhost:9000/destination", newDestination)
          .then((response) => {
             if (response.data.name === "MongoError") {
-               this.setState({
-                  snackBarRedOpen: true,
-                  msg: "Destination was not added..."
-               })
+               store.dispatch(snackBarRedOpen(true, "Destination was not added..."))
+               // this.setState({
+               //    snackBarRedOpen: true,
+               //    msg: "Destination was not added..."
+               // })
                setTimeout(() => {
-                  this.setState({
-                     snackBarRedOpen: false,
-                     msg: ""
-                  })
+                  store.dispatch(snackBarRedOpen(false, ""))
+                  // this.setState({
+                  //    snackBarRedOpen: false,
+                  //    msg: ""
+                  // })
                }, 2000);
             } else {
-               this.setState({
-                  snackBarGreenOpen: true,
-                  msg: "Destination was added!"
-               })
+               store.dispatch(snackBarGreenOpen(true, "Destination was added!"))
+               store.dispatch(addDestinationSuccessful())
+               // this.setState({
+               //    snackBarGreenOpen: true,
+               //    msg: "Destination was added!"
+               // })
                setTimeout(() => {
-                  this.setState({
-                     snackBarGreenOpen: false,
-                     msg: "",
-                     addDestinationSuccessful: true
-                  })
+                  store.dispatch(snackBarGreenOpen(false, ""))
+                  // this.setState({
+                  //    snackBarGreenOpen: false,
+                  //    msg: "",
+                  //    addDestinationSuccessful: true
+                  // })
                }, 2000);
             }
          })
@@ -118,7 +128,8 @@ class DestinationNew extends Component {
 
    render() {
 
-      const { addDestinationSuccessful, snackBarGreenOpen, snackBarRedOpen } = this.state
+      // const { addDestinationSuccessful, snackBarGreenOpen, snackBarRedOpen } = this.state
+      const { addDestinationSuccessful, msg, snackBarGreenOpen, snackBarRedOpen } = store.getState()
 
       return (
          <div className="DestinationNew-main-container">
@@ -188,8 +199,8 @@ class DestinationNew extends Component {
                      <InputText label="Rating:" type="text" name="rating" handleChange={this.handleChange} />
                   </div>
 
-                  {snackBarGreenOpen && <SnackbarGreen msg={this.state.msg} />}
-                  {snackBarRedOpen && <SnackbarRed msg={this.state.msg} />}
+                  {snackBarGreenOpen && <SnackbarGreen msg={msg} />}
+                  {snackBarRedOpen && <SnackbarRed msg={msg} />}
 
                   <div className="DestinationNew-div-row DestinationNew-submit-button">
                      <Button label="Submit" />

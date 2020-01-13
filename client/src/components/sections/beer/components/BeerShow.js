@@ -17,7 +17,7 @@ class BeerShow extends Component {
    render() {
 
       const { name, brewery, streetAddress, city, state, zip, phone, image,
-         website, beerType, beerColor, abv, ibu, rating } = this.props.data
+         website, beerType, beerColor, abv, ibu, rating, addedBy } = this.props.data
 
       const address = `${city}, ${state} ${zip}`
       const description = `Beer Type: ${beerType} - Beer Color: ${beerColor}`
@@ -37,6 +37,7 @@ class BeerShow extends Component {
                   <div><a href={website} target="_blank" rel="noopener noreferrer">Website:{" "}{brewery}</a></div>}
                <p>{description}</p>
                <p>{numbers}</p>
+               <p>Added By: {addedBy}</p>
             </div>
             <div className="BeerShow-right-container">
                <img src={image} alt={name} className="BeerShow-img" />
