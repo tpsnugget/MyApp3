@@ -4,10 +4,48 @@ export function addBeerSuccessful(){
    }
 }
 
+export function addDestinationSuccessful(){
+   return {
+      type: "ADD_DESTINATION_SUCCESSFUL"
+   }
+}
+
+export function addRecipeSuccessful(){
+   return {
+      type: "ADD_RECIPE_SUCCESSFUL"
+   }
+}
+
+export function addRestaurantSuccessful(){
+   return {
+      type: "ADD_RESTAURANT_SUCCESSFUL"
+   }
+}
+
+export function addRVSuccessful(){
+   return {
+      type: "ADD_RV_SUCCESSFUL"
+   }
+}
+
+export function allowedToModifySelection(e){
+   return {
+      type: "ALLOWED_TO_MODIFY_SELECTION",
+      allowedToModifySelection: e
+   }
+}
+
 export function chosenId(chosenId){
    return {
       type: "CHOSEN_ID",
       chosenId: chosenId
+   }
+}
+
+export function editPath(editPath){
+   return {
+      type: "EDIT_PATH",
+      editPath: editPath
    }
 }
 
@@ -106,6 +144,13 @@ export function loginUser(password, username){
 export function logoutUser(){
    return {
       type: "LOGOUT_USER"
+   }
+}
+
+export function newPath(newPath){
+   return {
+      type: "NEW_PATH",
+      newPath: newPath
    }
 }
 

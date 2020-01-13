@@ -2,7 +2,7 @@
 
 import React, { Component } from "react"
 import { store } from "../../../../store"
-import { getOneBeerData } from "../../../../actions"
+import { allowedToModifySelection, getOneBeerData } from "../../../../actions"
 import { chosenId } from "../../../../actions"
 import axios from "axios"
 import PropTypes from "prop-types"
@@ -35,6 +35,9 @@ class Beer extends Component {
                console.log("axios.get not in the db")
             } else {
                store.dispatch(getOneBeerData(response.data[0]))
+               const { oneBeerData, username } = store.getState()
+               const { addedBy } = oneBeerData
+               store.dispatch(allowedToModifySelection(addedBy === username))
             }
          })
          .catch((err) => console.log(err))
@@ -43,11 +46,9 @@ class Beer extends Component {
    render() {
 
       const { name } = this.props
-      const { oneBeerData, chosenId, username } = store.getState()
-      const addedBy = oneBeerData.addedBy
+      const { allowedToModifySelection, chosenId, oneBeerData } = store.getState()
 
-
-      const allowedToModifySelection = (addedBy === username ? true : false)
+      // const allowedToModifySelection = (addedBy === username ? true : false)
 
       return (
          <div className="Beer-main-container">

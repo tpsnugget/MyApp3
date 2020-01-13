@@ -19,7 +19,7 @@ class RVShow extends Component {
       const { name, streetAddress, city, state, zip, phone, image,
          website, reviewWebsite, reviewWebsiteRating, siteId, electricalHookup,
          water, sewerHookup, dumpStation, pullThroughSite, rate, petsAllowed,
-         petRestrictions, restrooms, showers, myRating, notes } = this.props.data
+         petRestrictions, restrooms, showers, myRating, notes, addedBy } = this.props.data
 
       const address = `${city}, ${state} ${zip}`
 
@@ -50,6 +50,7 @@ class RVShow extends Component {
                   <p><strong>Campground Restrooms:</strong>{" "}{restrooms ? "Yes" : "No"}</p>
                   <p><strong>Campground Showers:</strong>{" "}{showers ? "Yes" : "No"}</p>
                   <p><strong>My Rating:</strong>{" "}{myRating}</p>
+                  <p>Added By: {addedBy}</p>
                </div>
                <div className="RVShow-right-container">
                   <img src={image} alt={name} className="RVShow-img" />

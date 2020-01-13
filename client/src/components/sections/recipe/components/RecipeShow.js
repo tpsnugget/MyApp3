@@ -17,7 +17,7 @@ class RecipeShow extends Component {
    render() {
 
       const { name, creator, description, image, website, servings,
-         time, ingredients, prepSteps, keywords, rating, notes } = this.props.data
+         time, ingredients, prepSteps, keywords, rating, notes, addedBy } = this.props.data
 
       const myRating = (rating === "" ? "TBD" : rating)
 
@@ -42,6 +42,7 @@ class RecipeShow extends Component {
                <p><strong>Preperation Steps:</strong>{" "}{prepSteps}</p>
                <p><strong>Keywords: </strong>{" "}{keywords}</p>
                <p><strong>Notes:</strong>{" "}{notes}</p>
+               <p>Added By: {addedBy}</p>
             </div>
          </div>
       )

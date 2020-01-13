@@ -1,10 +1,19 @@
 /* MAIN LANDING PAGE */
 
-import React from "react"
+import React, { Component } from "react"
+import { store } from "../store"
+import { allowedToModifySelection,chosenId } from "../actions"
 import { MainLandingImageButton } from "./Atoms/MainLandingImageButton/MainLandingImageButton"
 import "../css/Landing.css"
 
-export const Landing = () => {
+class Landing extends Component{
+
+   componentDidMount(){
+      store.dispatch(allowedToModifySelection(false))
+      store.dispatch(chosenId(""))
+   }
+
+   render(){
 
       return (
          <div className="Landing-main-container">
@@ -39,4 +48,7 @@ export const Landing = () => {
             </div>
          </div>
       )
+   }
 }
+
+export default Landing

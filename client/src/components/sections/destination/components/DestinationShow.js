@@ -19,7 +19,7 @@ class DestinationShow extends Component {
       const { name, streetAddress, city, state, locationCode, airportCode,
               country, continent, phone, latitude, longitude, image, website,
               rating, personalNotes, pubNotes, restaurantNotes, sightNotes,
-              tourNotes } = this.props.data
+              tourNotes, addedBy } = this.props.data
 
       return (
          <div className="DestinationShow-main-container">
@@ -51,6 +51,7 @@ class DestinationShow extends Component {
                   {restaurantNotes !== "" ? <p><strong>Restaurant Notes{": "}</strong>{restaurantNotes}</p> : null}
                   {sightNotes !== "" ? <p><strong>Sight Notes{": "}</strong>{sightNotes}</p> : null}
                   {tourNotes !== "" ? <p><strong>Tour Notes{": "}</strong>{tourNotes}</p> : null}
+                  <p>Added By: {addedBy}</p>
             </div>
             <div className="DestinationShow-right-container">
                <img src={image} alt={name} className="DestinationShow-img" />

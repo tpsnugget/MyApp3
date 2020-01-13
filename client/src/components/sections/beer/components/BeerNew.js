@@ -52,7 +52,6 @@ class BeerNew extends Component {
 
       axios.post("http://localhost:9000/beer", newBeer)
          .then((response) => {
-            // console.log(response)
             if (response.data.name === "MongoError") {
                store.dispatch(snackBarRedOpen(true, "Beer was not added..."))
                setTimeout(() => {

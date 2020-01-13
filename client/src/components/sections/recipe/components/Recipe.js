@@ -2,7 +2,7 @@
 
 import React, { Component } from "react"
 import { store } from "../../../../store"
-import { getOneRecipeData } from "../../../../actions"
+import { allowedToModifySelection, getOneRecipeData } from "../../../../actions"
 import { chosenId } from "../../../../actions"
 import axios from "axios"
 import PropTypes from "prop-types"
@@ -36,6 +36,9 @@ class Recipe extends Component{
             } else {
                // console.log("response.data[0] ", response.data[0])
                store.dispatch(getOneRecipeData(response.data[0]))
+               const { oneRecipeData, username } = store.getState()
+               const { addedBy } = oneRecipeData
+               store.dispatch(allowedToModifySelection(addedBy === username))
             }
          })
          .catch((err) => console.log(err))

@@ -1,6 +1,7 @@
 import React, { Component } from "react"
 import { store } from "../store"
-import { getBeerData, getDestinationData, getRecipeData, getRestaurantData, getRVData } from "../actions"
+import { getBeerData, getDestinationData, getRecipeData,
+         getRestaurantData, getRVData } from "../actions"
 import axios from "axios"
 import PropTypes from "prop-types"
 import "../css/Sidebar.css"
