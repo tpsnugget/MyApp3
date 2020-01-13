@@ -2,7 +2,8 @@
 
 import React, { Component } from "react"
 import { Redirect } from "react-router-dom"
-import PropTypes from "prop-types"
+import { store } from "../../../../store"
+import { addRVSuccessful, handleChange, snackBarGreenOpen, snackBarRedOpen } from "../../../../actions"
 import { CancelLink } from "../../../Atoms/CancelLink/CancelLink"
 import { SnackbarGreen } from "../../../Atoms/SnackbarGreen/SnackbarGreen"
 import { SnackbarRed } from "../../../Atoms/SnackbarRed/SnackbarRed"
@@ -17,113 +18,60 @@ import "../css/RVNew.css"
 
 class RVNew extends Component {
 
-   static propTypes = {
-      /* Passed down from App.js, gets added to database to identify which
-         user added the new beer to the db */
-      loggedInName: PropTypes.string
-   }
-
-   constructor(props) {
-      super(props)
-      this.state = {
-         name: "",
-         streetAddress: "",
-         city: "",
-         state: "",
-         zip: "",
-         phone: "",
-         latitude: "",
-         longitude: "",
-         image: "",
-         website: "",
-         reviewWebsite: "",
-         reviewWebsiteRating: "",
-         siteId: "",
-         electricalHookup: "",
-         water: false,
-         sewerHookup: false,
-         dumpStation: false,
-         pullThroughSite: false,
-         rate: "",
-         petsAllowed: false,
-         petRestrictions: "",
-         restrooms: false,
-         showers: false,
-         myRating: "",
-         notes: "",
-         addedBy: "",
-         snackBarGreenOpen: false,
-         snackBarRedOpen: false,
-         msg: "",
-         addRVSuccessful: false
-      }
-      this.handleChange = this.handleChange.bind(this)
-      this.handleSubmit = this.handleSubmit.bind(this)
-   }
-
    handleChange(e) {
-      this.setState({
-         [e.target.name]: e.target.value
-      })
+      store.dispatch(handleChange(e))
    }
 
    handleSubmit(e) {
       e.preventDefault()
 
+      const { name, streetAddress, city, state, zip, phone, latitude, longitude,
+         image, website, reviewWebsite, reviewWebsiteRating, siteId,
+         electricalHookup, water, sewerHookup, dumpStation, pullThroughSite,
+         rate, petsAllowed, petRestrictions, restrooms, showers, myRating,
+         notes, username } = store.getState()
+
       const newRV = {
-         name: this.state.name,
-         streetAddress: this.state.streetAddress,
-         city: this.state.city,
-         state: this.state.state,
-         zip: this.state.zip,
-         phone: this.state.phone,
-         latitude: this.state.latitude,
-         longitude: this.state.longitude,
-         image: this.state.image,
-         website: this.state.website,
-         reviewWebsite: this.state.reviewWebsite,
-         reviewWebsiteRating: this.state.reviewWebsiteRating,
-         siteId: this.state.siteId,
-         electricalHookup: this.state.electricalHookup,
-         water: this.state.water,
-         sewerHookup: this.state.sewerHookup,
-         dumpStation: this.state.dumpStation,
-         pullThroughSite: this.state.pullThroughSite,
-         rate: this.state.rate,
-         petsAllowed: this.state.petsAllowed,
-         petRestrictions: this.state.petRestrictions,
-         restrooms: this.state.restrooms,
-         showers: this.state.showers,
-         myRating: this.state.myRating,
-         notes: this.state.notes,
-         addedBy: this.props.username
+         name: name,
+         streetAddress: streetAddress,
+         city: city,
+         state: state,
+         zip: zip,
+         phone: phone,
+         latitude: latitude,
+         longitude: longitude,
+         image: image,
+         website: website,
+         reviewWebsite: reviewWebsite,
+         reviewWebsiteRating: reviewWebsiteRating,
+         siteId: siteId,
+         electricalHookup: electricalHookup,
+         water: water,
+         sewerHookup: sewerHookup,
+         dumpStation: dumpStation,
+         pullThroughSite: pullThroughSite,
+         rate: rate,
+         petsAllowed: petsAllowed,
+         petRestrictions: petRestrictions,
+         restrooms: restrooms,
+         showers: showers,
+         myRating: myRating,
+         notes: notes,
+         addedBy: username
       }
 
       axios.post("http://localhost:9000/rv", newRV)
          .then((response) => {
-            // console.log(response)
             if (response.data.name === "MongoError") {
-               this.setState({
-                  snackBarRedOpen: true,
-                  msg: "RV Site was not added..."
-               })
+               store.dispatch(snackBarRedOpen(true, "RV Site was not added..."))
                setTimeout(() => {
-                  this.setState({
-                     snackBarRedOpen: false,
-                     msg: ""
-                  })
+                  store.dispatch(snackBarRedOpen(false, ""))
                }, 2000);
             } else {
-               this.setState({
-                  snackBarGreenOpen: true,
-                  msg: "RV Site was added!"
-               })
+               store.dispatch(snackBarGreenOpen(true, "RV Site was added!"))
                setTimeout(() => {
-                  this.setState({
-                     snackBarGreenOpen: false,
-                     msg: "",
-                     addRVSuccessful: true
-                  })
+                  store.dispatch(snackBarGreenOpen(false, ""))
+                  store.dispatch(addRVSuccessful(true))
                }, 2000);
             }
          })
@@ -132,7 +80,7 @@ class RVNew extends Component {
 
    render() {
 
-      const { addRVSuccessful, snackBarGreenOpen, snackBarRedOpen } = this.state
+      const { addRVSuccessful, msg, snackBarGreenOpen, snackBarRedOpen } = store.getState()
 
       return (
          <div className="RVNew-main-container">
@@ -328,7 +276,6 @@ class RVNew extends Component {
                               className="RVNew-select"
                               onChange={this.handleChange}
                            >
-                              <option value="">My Rating</option>
                               <option value="">Select a Rating</option>
                               <option value="5.0">Best RV Site Ever!</option>
                               <option value="4.5">Totally Awesome!</option>
@@ -346,8 +293,8 @@ class RVNew extends Component {
                      <TextArea rows="10" cols="89" label="Notes:" name="notes" placeholder="Personal Notes" type="text" handleChange={this.handleChange} />
                   </div>
 
-                  {snackBarGreenOpen && <SnackbarGreen msg={this.state.msg} />}
-                  {snackBarRedOpen && <SnackbarRed msg={this.state.msg} />}
+                  {snackBarGreenOpen && <SnackbarGreen msg={msg} />}
+                  {snackBarRedOpen && <SnackbarRed msg={msg} />}
 
                   <div className="RVNew-div-row RVNew-submit-button">
                      <Button label="Submit" />

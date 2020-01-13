@@ -2,7 +2,8 @@
 
 import React, { Component } from "react"
 import { Redirect } from "react-router-dom"
-import PropTypes from "prop-types"
+import { store } from "../../../../store"
+import { addRecipeSuccessful, handleChange, snackBarGreenOpen, snackBarRedOpen } from "../../../../actions"
 import { CancelLink } from "../../../Atoms/CancelLink/CancelLink"
 import { SnackbarGreen } from "../../../Atoms/SnackbarGreen/SnackbarGreen"
 import { SnackbarRed } from "../../../Atoms/SnackbarRed/SnackbarRed"
@@ -17,87 +18,45 @@ import "../css/RecipeNew.css"
 
 class RecipeNew extends Component {
 
-   static propTypes = {
-      /* Passed down from App.js, gets added to database to identify which
-         user added the new beer to the db */
-      loggedInName: PropTypes.string
-   }
-
-   constructor(props) {
-      super(props)
-      this.state = {
-         name: "",
-         creator: "",
-         description: "",
-         image: "",
-         website: "",
-         servings: "",
-         time: "",
-         ingredients: "",
-         prepSteps: "",
-         keywords: "",
-         rating: "",
-         notes: "",
-         addedBy: "",
-         snackBarGreenOpen: false,
-         snackBarRedOpen: false,
-         msg: "",
-         addRecipeSuccessful: false
-      }
-      this.handleChange = this.handleChange.bind(this)
-      this.handleSubmit = this.handleSubmit.bind(this)
-   }
-
    handleChange(e) {
-      this.setState({
-         [e.target.name]: e.target.value
-      })
+      store.dispatch(handleChange(e))
    }
 
    handleSubmit(e) {
       e.preventDefault()
 
+      const {
+         name, creator, description, image, website, servings, time, ingredients,
+               prepSteps, keywords, rating, notes, username } = store.getState()
+
       const newRecipe = {
-         name: this.state.name,
-         creator: this.state.creator,
-         description: this.state.description,
-         image: this.state.image,
-         website: this.state.website,
-         servings: this.state.servings,
-         time: this.state.time,
-         ingredients: this.state.ingredients,
-         prepSteps: this.state.prepSteps,
-         keywords: this.state.keywords,
-         rating: this.state.rating,
-         notes: this.state.notes,
-         addedBy: this.props.username
+         name: name,
+         creator: creator,
+         description: description,
+         image: image,
+         website: website,
+         servings: servings,
+         time: time,
+         ingredients: ingredients,
+         prepSteps: prepSteps,
+         keywords: keywords,
+         rating: rating,
+         notes: notes,
+         addedBy: username
       }
 
       axios.post("http://localhost:9000/recipe", newRecipe)
          .then((response) => {
-            // console.log(response)
             if (response.data.name === "MongoError") {
-               this.setState({
-                  snackBarRedOpen: true,
-                  msg: "Recipe was not added..."
-               })
+               store.dispatch(snackBarRedOpen(true, "Recipe was not added..."))
                setTimeout(() => {
-                  this.setState({
-                     snackBarRedOpen: false,
-                     msg: ""
-                  })
+                  store.dispatch(snackBarRedOpen(false, ""))
                }, 2000);
             } else {
-               this.setState({
-                  snackBarGreenOpen: true,
-                  msg: "Recipe was added!"
-               })
+               store.dispatch(snackBarGreenOpen(true, "Recipe was added!"))
                setTimeout(() => {
-                  this.setState({
-                     snackBarGreenOpen: false,
-                     msg: "",
-                     addRecipeSuccessful: true
-                  })
+                  store.dispatch(snackBarGreenOpen(false, ""))
+                  store.dispatch(addRecipeSuccessful(true))
                }, 2000);
             }
          })
@@ -106,7 +65,7 @@ class RecipeNew extends Component {
 
    render() {
 
-      const { addRecipeSuccessful, snackBarGreenOpen, snackBarRedOpen } = this.state
+      const { addRecipeSuccessful, msg, snackBarGreenOpen, snackBarRedOpen } = store.getState()
 
       return (
          <div className="RecipeNew-main-container">
@@ -177,8 +136,8 @@ class RecipeNew extends Component {
                      <TextArea rows="5" cols="89" label="Notes:" name="notes" placeholder="Enter Personal Notes Here" type="text" handleChange={this.handleChange} />
                   </div>
 
-                  {snackBarGreenOpen && <SnackbarGreen msg={this.state.msg} />}
-                  {snackBarRedOpen && <SnackbarRed msg={this.state.msg} />}
+                  {snackBarGreenOpen && <SnackbarGreen msg={msg} />}
+                  {snackBarRedOpen && <SnackbarRed msg={msg} />}
 
 
                   <div className="RecipeNew-div-row RecipeNew-submit-button">

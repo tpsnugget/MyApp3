@@ -15,6 +15,11 @@ import "../css/Destination.css"
 
 class Destination extends Component {
 
+   componentDidMount(){
+      store.dispatch(allowedToModifySelection(false))
+      store.dispatch(chosenId(""))
+   }
+
    static propTypes = {
       /* name (Destination) comes from App.js, sent to Sidebar and Mininavbar */
       name: PropTypes.string,
@@ -54,11 +59,7 @@ class Destination extends Component {
    render() {
 
       const { name } = this.props
-      const { oneDestinationData, chosenId, username } = store.getState()
-      const addedBy = oneDestinationData.addedBy
-
-
-      const allowedToModifySelection = (addedBy === username ? true : false)
+      const { allowedToModifySelection, oneDestinationData, chosenId, username } = store.getState()
 
       return (
          <div className="Destination-main-container">

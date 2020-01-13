@@ -14,6 +14,11 @@ import "../css/Restaurant.css"
 
 class Restaurant extends Component {
 
+   componentDidMount(){
+      store.dispatch(allowedToModifySelection(false))
+      store.dispatch(chosenId(""))
+   }
+
    static propTypes = {
       /* name (Restaurant) comes from App.js, sent to Sidebar and Mininavbar */
       name: PropTypes.string
@@ -45,10 +50,7 @@ class Restaurant extends Component {
    render() {
 
       const { name } = this.props
-      const { oneRestaurantData, chosenId, username } = store.getState()
-      const addedBy = oneRestaurantData.addedBy
-
-      const allowedToModifySelection = (addedBy === username ? true : false)
+      const { allowedToModifySelection, oneRestaurantData, chosenId, username } = store.getState()
 
       return (
          <div className="Restaurant-main-container">

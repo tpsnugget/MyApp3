@@ -15,6 +15,11 @@ import "../css/Recipe.css"
 
 class Recipe extends Component{
 
+   componentDidMount(){
+      store.dispatch(allowedToModifySelection(false))
+      store.dispatch(chosenId(""))
+   }
+
    static propTypes = {
       /* name (Recipe) comes from App.js, sent to Sidebar and Mininavbar */
       name: PropTypes.string
@@ -47,10 +52,7 @@ class Recipe extends Component{
    render(){
 
       const { name } = this.props
-      const { oneRecipeData, chosenId, username } = store.getState()
-      const addedBy = oneRecipeData.addedBy
-
-      const allowedToModifySelection = (addedBy === username ? true : false)
+      const { allowedToModifySelection, oneRecipeData, chosenId, username } = store.getState()
 
       return(
          <div className="Recipe-main-container">
