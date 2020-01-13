@@ -8,16 +8,6 @@ import axios from "axios"
 
 class Delete extends Component{
 
-   constructor(props){
-      super(props)
-      this.state = {
-         snackBarGreenOpen: false,
-         snackBarRedOpen: false,
-         msg: "",
-         goodDelete: false
-      }
-   }
-
    componentDidMount(){
 
       const { type, id } = this.props.location.state
@@ -32,25 +22,12 @@ class Delete extends Component{
          .then((response) => {
             if (response.data.name === "MongoError") {
                store.dispatch(snackBarRedOpen(true, "Delete was not successfull"))
-               // this.setState({
-               //    snackBarRedOpen: true,
-               //    msg: "Delete was not successfull"
-               // })
             } else {
                store.dispatch(snackBarGreenOpen(true, "Delete was successful"))
-               // this.setState({
-               //    snackBarGreenOpen: true,
-               //    msg: "Delete was successful",
-               // })
                setTimeout(() => {
                   store.dispatch(snackBarGreenOpen(false, ""))
                   store.dispatch(goodDelete())
-                  // this.setState({
-                  //    snackBarGreenOpen: false,
-                  //    msg: "",
-                  //    goodDelete: true
-                  // })
-               }, 2500);
+                 }, 2500);
             }
          })
          .catch((err) => console.log(err))
@@ -58,16 +35,16 @@ class Delete extends Component{
 
    render(){
 
-      const { snackBarGreenOpen, snackBarRedOpen } = this.state
       const { type } = this.props.location.state
+      const { goodDelete, msg, snackBarGreenOpen, snackBarRedOpen } = store.getState()
 
       const path = `/${type.toLowerCase()}`
       
       return(
          <div>
             {goodDelete && <Redirect to={path} />}
-            {snackBarGreenOpen && <SnackbarGreen msg={this.state.msg} />}
-            {snackBarRedOpen && <SnackbarRed msg={this.state.msg} />}
+            {snackBarGreenOpen && <SnackbarGreen msg={msg} />}
+            {snackBarRedOpen && <SnackbarRed msg={msg} />}
          </div>
       )
    }
