@@ -15,6 +15,11 @@ import "../css/RV.css"
 
 class RV extends Component {
 
+   componentDidMount(){
+      store.dispatch(allowedToModifySelection(false))
+      store.dispatch(chosenId(""))
+   }
+
    static propTypes = {
       /* name (RV) comes from App.js, sent to Sidebar and Mininavbar */
       name: PropTypes.string
@@ -46,10 +51,7 @@ class RV extends Component {
    render() {
 
       const { name } = this.props
-      const { oneRVData, chosenId, username } = store.getState()
-      const addedBy = oneRVData.addedBy
-
-      const allowedToModifySelection = (addedBy === username ? true : false)
+      const { allowedToModifySelection, oneRVData, chosenId, username } = store.getState()
 
       return (
          <div className="RV-main-container">

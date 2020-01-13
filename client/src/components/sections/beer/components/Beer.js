@@ -15,6 +15,11 @@ import "../css/Beer.css"
 
 class Beer extends Component {
 
+   componentDidMount(){
+      store.dispatch(allowedToModifySelection(false))
+      store.dispatch(chosenId(""))
+   }
+
    static propTypes = {
       /* name (Beer) comes from App.js, sent to Sidebar and Mininavbar */
       name: PropTypes.string
@@ -47,8 +52,6 @@ class Beer extends Component {
 
       const { name } = this.props
       const { allowedToModifySelection, chosenId, oneBeerData } = store.getState()
-
-      // const allowedToModifySelection = (addedBy === username ? true : false)
 
       return (
          <div className="Beer-main-container">

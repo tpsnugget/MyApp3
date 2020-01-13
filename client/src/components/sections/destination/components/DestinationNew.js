@@ -4,7 +4,6 @@ import React, { Component } from "react"
 import { Redirect } from "react-router-dom"
 import { store } from "../../../../store"
 import { addDestinationSuccessful, handleChange, snackBarGreenOpen, snackBarRedOpen } from "../../../../actions"
-import PropTypes from "prop-types"
 import { CancelLink } from "../../../Atoms/CancelLink/CancelLink"
 import { SnackbarGreen } from "../../../Atoms/SnackbarGreen/SnackbarGreen"
 import { SnackbarRed } from "../../../Atoms/SnackbarRed/SnackbarRed"
@@ -18,43 +17,6 @@ import "../css/DestinationNew.css"
 
 
 class DestinationNew extends Component {
-
-   static propTypes = {
-      /* Passed down from App.js, gets added to database to identify which
-         user added the new beer to the db */
-      loggedInName: PropTypes.string
-   }
-
-   // constructor(props) {
-   //    super(props)
-   //    this.state = {
-   //       name: "",
-   //       streetAddress: "",
-   //       city: "",
-   //       state: "",
-   //       locationCode: "",
-   //       airportCode: "",
-   //       country: "",
-   //       continent: "",
-   //       phone: "",
-   //       latitude: "",
-   //       longitude: "",
-   //       image: "",
-   //       website: "",
-   //       rating: "",
-   //       personalNotes: "",
-   //       pubNotes: "",
-   //       restaurantNotes: "",
-   //       sightNotes: "",
-   //       tourNotes: "",
-   //       snackBarGreenOpen: false,
-   //       snackBarRedOpen: false,
-   //       msg: "",
-   //       addDestinationSuccessful: false
-   //    }
-   //    this.handleChange = this.handleChange.bind(this)
-   //    this.handleSubmit = this.handleSubmit.bind(this)
-   // }
 
    handleChange = (e) => {
       store.dispatch(handleChange(e))
@@ -95,31 +57,14 @@ class DestinationNew extends Component {
          .then((response) => {
             if (response.data.name === "MongoError") {
                store.dispatch(snackBarRedOpen(true, "Destination was not added..."))
-               // this.setState({
-               //    snackBarRedOpen: true,
-               //    msg: "Destination was not added..."
-               // })
                setTimeout(() => {
                   store.dispatch(snackBarRedOpen(false, ""))
-                  // this.setState({
-                  //    snackBarRedOpen: false,
-                  //    msg: ""
-                  // })
                }, 2000);
             } else {
                store.dispatch(snackBarGreenOpen(true, "Destination was added!"))
                store.dispatch(addDestinationSuccessful())
-               // this.setState({
-               //    snackBarGreenOpen: true,
-               //    msg: "Destination was added!"
-               // })
                setTimeout(() => {
                   store.dispatch(snackBarGreenOpen(false, ""))
-                  // this.setState({
-                  //    snackBarGreenOpen: false,
-                  //    msg: "",
-                  //    addDestinationSuccessful: true
-                  // })
                }, 2000);
             }
          })
@@ -128,7 +73,6 @@ class DestinationNew extends Component {
 
    render() {
 
-      // const { addDestinationSuccessful, snackBarGreenOpen, snackBarRedOpen } = this.state
       const { addDestinationSuccessful, msg, snackBarGreenOpen, snackBarRedOpen } = store.getState()
 
       return (

@@ -2,7 +2,8 @@
 
 import React, { Component } from "react"
 import { Redirect } from "react-router-dom"
-import PropTypes from "prop-types"
+import { store } from "../../../../store"
+import { addRestaurantSuccessful, handleChange, snackBarGreenOpen, snackBarRedOpen } from "../../../../actions"
 import { CancelLink } from "../../../Atoms/CancelLink/CancelLink"
 import { SnackbarGreen } from "../../../Atoms/SnackbarGreen/SnackbarGreen"
 import { SnackbarRed } from "../../../Atoms/SnackbarRed/SnackbarRed"
@@ -17,92 +18,48 @@ import "../css/RestaurantNew.css"
 
 class RestaurantNew extends Component {
 
-   static propTypes = {
-      /* Passed down from App.js, gets added to database to identify which
-         user added the new restaurant to the db */
-      loggedInName: PropTypes.string
-   }
-
-   constructor(props) {
-      super(props)
-      this.state = {
-         name: "",
-         streetAddress: "",
-         city: "",
-         state: "",
-         zip: "",
-         phone: "",
-         latitude: "",
-         longitude: "",
-         image: "",
-         website: "",
-         favFood: "",
-         rating: "",
-         cuisine: "",
-         price: "",
-         notes: "",
-         snackBarGreenOpen: false,
-         snackBarRedOpen: false,
-         msg: "",
-         addRestaurantSuccessful: false
-      }
-      this.handleChange = this.handleChange.bind(this)
-      this.handleSubmit = this.handleSubmit.bind(this)
-   }
-
    handleChange(e) {
-      this.setState({
-         [e.target.name]: e.target.value
-      })
+      store.dispatch(handleChange(e))
    }
 
    handleSubmit(e) {
       e.preventDefault()
 
+      const { name, streetAddress, city, state, zip, phone, latitude, longitude,
+              image, website, favFood, rating, cuisine, price, notes, username } = store.getState()
+
       const newRestaurant = {
-         name: this.state.name,
-         streetAddress: this.state.streetAddress,
-         city: this.state.city,
-         state: this.state.state,
-         zip: this.state.zip,
-         phone: this.state.phone,
-         latitude: this.state.latitude,
-         longitude: this.state.longitude,
-         image: this.state.image,
-         website: this.state.website,
-         favFood: this.state.favFood,
-         rating: this.state.rating,
-         cuisine: this.state.cuisine,
-         price: this.state.price,
-         notes: this.state.notes,
-         addedBy: this.props.username
+         name: name,
+         streetAddress: streetAddress,
+         city: city,
+         state: state,
+         zip: zip,
+         phone: phone,
+         latitude: latitude,
+         longitude: longitude,
+         image: image,
+         website: website,
+         favFood: favFood,
+         rating: rating,
+         cuisine: cuisine,
+         price: price,
+         notes: notes,
+         addedBy: username
       }
 
       axios.post("http://localhost:9000/restaurant", newRestaurant)
          .then((response) => {
             console.log(response)
             if (response.data.name === "MongoError") {
-               this.setState({
-                  snackBarRedOpen: true,
-                  msg: "Restaurant was not added..."
-               })
+               store.dispatch(snackBarRedOpen(true, "Restaurant was not added..."))
                setTimeout(() => {
-                  this.setState({
-                     snackBarRedOpen: false,
-                     msg: ""
-                  })
+                  store.dispatch(snackBarRedOpen(false, ""))
                }, 2000);
             } else {
-               this.setState({
-                  snackBarGreenOpen: true,
-                  msg: "Restaurant was added!"
-               })
+               store.dispatch(snackBarGreenOpen(true, "Restaurant was added!"))
                setTimeout(() => {
-                  this.setState({
-                     snackBarGreenOpen: false,
-                     msg: "",
-                     addRestaurantSuccessful: true
-                  })
+                  store.dispatch(snackBarGreenOpen(false, ""))
+                  store.dispatch(addRestaurantSuccessful())
                }, 2000);
             }
          })
@@ -111,7 +68,7 @@ class RestaurantNew extends Component {
 
    render() {
 
-      const { addRestaurantSuccessful, snackBarGreenOpen, snackBarRedOpen, cancel } = this.state
+      const { addRestaurantSuccessful, msg, snackBarGreenOpen, snackBarRedOpen, cancel } = store.getState()
 
       return (
          <div className="RestaurantNew-main-container">
@@ -207,8 +164,8 @@ class RestaurantNew extends Component {
                      <TextArea rows="5" cols="89" label="Notes:" name="notes" placeholder="Enter Personal Notes Here" type="text" handleChange={this.handleChange} />
                   </div>
 
-                  {snackBarGreenOpen && <SnackbarGreen msg={this.state.msg} />}
-                  {snackBarRedOpen && <SnackbarRed msg={this.state.msg} />}
+                  {snackBarGreenOpen && <SnackbarGreen msg={msg} />}
+                  {snackBarRedOpen && <SnackbarRed msg={msg} />}
 
                   <div className="RestaurantNew-div-row RestaurantNew-submit-button">
                      <Button label="Submit" />
