@@ -167,7 +167,7 @@ class RestaurantEdit extends Component {
             {addRestaurantSuccessful && <Redirect to="/restaurant" />}
             {cancel && <Redirect to="/landing" />}
             <div className="RestaurantNew-form-container">
-               <h1 className="RestaurantNew-h1">Add a New Restaurant</h1>
+               <h1 className="RestaurantNew-h1">Update Restaurant</h1>
                <form
                   className="RestaurantNew-form"
                   onSubmit={this.handleSubmit}

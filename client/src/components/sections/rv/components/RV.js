@@ -51,7 +51,7 @@ class RV extends Component {
    render() {
 
       const { name } = this.props
-      const { allowedToModifySelection, oneRVData, chosenId, username } = store.getState()
+      const { allowedToModifySelection, oneRVData, chosenId } = store.getState()
 
       return (
          <div className="RV-main-container">

@@ -52,7 +52,7 @@ class Recipe extends Component{
    render(){
 
       const { name } = this.props
-      const { allowedToModifySelection, oneRecipeData, chosenId, username } = store.getState()
+      const { allowedToModifySelection, oneRecipeData, chosenId } = store.getState()
 
       return(
          <div className="Recipe-main-container">

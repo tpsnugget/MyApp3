@@ -2,6 +2,8 @@
 
 import React, { Component } from "react"
 import { Redirect } from "react-router-dom"
+import { store } from "../../../../store"
+import { addBeerSuccessful, getOneBeerData, handleChange, snackBarGreenOpen, snackBarRedOpen } from "../../../../actions"
 import PropTypes from "prop-types"
 import { CancelLink } from "../../../Atoms/CancelLink/CancelLink"
 import { SnackbarGreen } from "../../../Atoms/SnackbarGreen/SnackbarGreen"
@@ -52,27 +54,28 @@ class BeerEdit extends Component {
          msg: "",
          addBeerSuccessful: false
       }
-      this.handleChange = this.handleChange.bind(this)
-      this.handleSubmit = this.handleSubmit.bind(this)
    }
 
    componentDidMount() {
+      const { chosenId } = store.getState()
       this.setState({
          chosenId: this.props.location.state.id,
       })
 
       axios.get("http://localhost:9000/beer", {
          params: {
-            _id: this.props.location.state.id
+            // _id: this.props.location.state.id
+            _id: chosenId
          }
       })
          .then((response) => {
             if (response.data === "") {
                console.log("axios.get not in the db")
             } else {
-               this.setState({
-                  data: response.data[0]
-               })
+               store.dispatch(getOneBeerData(response.data[0]))
+               // this.setState({
+               //    data: response.data[0]
+               // })
             }
          })
          .then(() => {
@@ -102,63 +105,99 @@ class BeerEdit extends Component {
          .catch((err) => console.log(err))
    }
 
-   handleChange(e) {
-      this.setState({
-         [e.target.name]: e.target.value
-      })
+   handleChange = (e) => {
+      store.dispatch(handleChange(e))
+      // this.setState({
+      //    [e.target.name]: e.target.value
+      // })
    }
 
-   handleSubmit(e) {
+   handleSubmit = (e) => {
       e.preventDefault()
 
+      // const editBeer = {
+      //    id: this.state.id,
+      //    name: this.state.name,
+      //    brewery: this.state.brewery,
+      //    streetAddress: this.state.streetAddress,
+      //    city: this.state.city,
+      //    state: this.state.state,
+      //    zip: this.state.zip,
+      //    phone: this.state.phone,
+      //    latitude: this.state.latitude,
+      //    longitude: this.state.longitude,
+      //    image: this.state.image,
+      //    website: this.state.website,
+      //    beerType: this.state.beerType,
+      //    beerColor: this.state.beerColor,
+      //    glassware: this.state.glassware,
+      //    abv: this.state.abv,
+      //    ibu: this.state.ibu,
+      //    rating: this.state.rating,
+      //    notes: this.state.notes,
+      //    addedBy: this.props.username
+      // }
+
+      const { oneBeerData } = store.getState()
+
+      const { _id, name, brewery, streetAddress, city, state, zip, phone,
+         latitude, longitude, image, website, beerType, beerColor,
+         glassware, abv, ibu, rating, notes, addedBy } = oneBeerData
+
       const editBeer = {
-         id: this.state.id,
-         name: this.state.name,
-         brewery: this.state.brewery,
-         streetAddress: this.state.streetAddress,
-         city: this.state.city,
-         state: this.state.state,
-         zip: this.state.zip,
-         phone: this.state.phone,
-         latitude: this.state.latitude,
-         longitude: this.state.longitude,
-         image: this.state.image,
-         website: this.state.website,
-         beerType: this.state.beerType,
-         beerColor: this.state.beerColor,
-         glassware: this.state.glassware,
-         abv: this.state.abv,
-         ibu: this.state.ibu,
-         rating: this.state.rating,
-         notes: this.state.notes,
-         addedBy: this.props.username
+         id: _id,
+         name: name,
+         brewery: brewery,
+         streetAddress: streetAddress,
+         city: city,
+         state: state,
+         zip: zip,
+         phone: phone,
+         latitude: latitude,
+         longitude: longitude,
+         image: image,
+         website: website,
+         beerType: beerType,
+         beerColor: beerColor,
+         glassware: glassware,
+         abv: abv,
+         ibu: ibu,
+         rating: rating,
+         notes: notes,
+         addedBy: addedBy
       }
+
+      console.log("editBeer ", editBeer)
 
       axios.put("http://localhost:9000/beer", editBeer)
          .then((response) => {
-            // console.log(response)
             if (response.data.name === "MongoError") {
-               this.setState({
-                  snackBarRedOpen: true,
-                  msg: "Beer was not Updated..."
-               })
+               store.dispatch(snackBarRedOpen(true, "Beer was not Updated..."))
+               // this.setState({
+               //    snackBarRedOpen: true,
+               //    msg: "Beer was not Updated..."
+               // })
                setTimeout(() => {
-                  this.setState({
-                     snackBarRedOpen: false,
-                     msg: ""
-                  })
+                  store.dispatch(snackBarRedOpen(false, ""))
+                  // this.setState({
+                  //    snackBarRedOpen: false,
+                  //    msg: ""
+                  // })
                }, 2000);
             } else {
-               this.setState({
-                  snackBarGreenOpen: true,
-                  msg: "Beer was Updated!"
-               })
+               store.dispatch(snackBarGreenOpen(true, "Beer was Updated!"))
+               // this.setState({
+               //    snackBarGreenOpen: true,
+               //    msg: "Beer was Updated!"
+               // })
                setTimeout(() => {
-                  this.setState({
-                     snackBarGreenOpen: false,
-                     msg: "",
-                     addBeerSuccessful: true
-                  })
+                  store.dispatch(snackBarGreenOpen(false, ""))
+                  store.dispatch(addBeerSuccessful())
+                  // this.setState({
+                  //    snackBarGreenOpen: false,
+                  //    msg: "",
+                  //    addBeerSuccessful: true
+                  // })
                }, 2000);
             }
          })
@@ -167,15 +206,21 @@ class BeerEdit extends Component {
 
    render() {
 
-      const { addBeerSuccessful, snackBarGreenOpen, snackBarRedOpen, name, brewery, streetAddress,
+      const { oneBeerData } = store.getState()
+
+      const { name, brewery, streetAddress,
          city, state, zip, phone, latitude, longitude, image, website, beerType,
-         beerColor, glassware, abv, ibu, rating, notes } = this.state
+         beerColor, glassware, abv, ibu, rating, notes } = store.getState()
+         // beerColor, glassware, abv, ibu, rating, notes } = oneBeerData
+         // beerColor, glassware, abv, ibu, rating, notes } = this.state
+
+      const { addBeerSuccessful, msg, snackBarGreenOpen, snackBarRedOpen } = store.getState()
 
       return (
          <div className="BeerEdit-main-container">
             {addBeerSuccessful && <Redirect to="/beer" />}
             <div className="BeerEdit-form-container">
-               <h1 className="BeerEdit-h1">Edit Beer</h1>
+               <h1 className="BeerEdit-h1">Update Beer</h1>
                <form
                   className="BeerEdit-form"
                   onSubmit={this.handleSubmit} >
@@ -299,8 +344,8 @@ class BeerEdit extends Component {
                      <TextArea rows="5" cols="89" label="Notes:" name="notes" placeholder="Enter Personal Notes Here" type="text" value={notes} handleChange={this.handleChange} />
                   </div>
 
-                  {snackBarGreenOpen && <SnackbarGreen msg={this.state.msg} />}
-                  {snackBarRedOpen && <SnackbarRed msg={this.state.msg} />}
+                  {snackBarGreenOpen && <SnackbarGreen msg={msg} />}
+                  {snackBarRedOpen && <SnackbarRed msg={msg} />}
 
                   <div className="BeerEdit-div-row BeerEdit-submit-button">
                      <Button label="Submit" />

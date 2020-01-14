@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from "react"
+import md5 from "md5"
 import { Redirect } from "react-router-dom"
 import { store } from "../store"
 import { handleChange, loginUser, snackBarGreenOpen, snackBarRedOpen } from "../actions"
@@ -28,7 +29,7 @@ class Login extends Component {
          .then((response) => {
 
             if (response.data._id) {
-               if (response.data.password === password) {
+               if (response.data.password === md5(password)) {
                   store.dispatch(snackBarGreenOpen(true, "Login was successful"))
                   setTimeout(() => {
                      store.dispatch(loginUser(password, username.toLowerCase()))
