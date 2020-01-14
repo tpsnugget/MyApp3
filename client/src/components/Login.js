@@ -1,11 +1,11 @@
 import React, { Component, Fragment } from "react"
-import md5 from "md5"
+import bcrypt from "bcryptjs"
 import { Redirect } from "react-router-dom"
 import { store } from "../store"
 import { handleChange, loginUser, snackBarGreenOpen, snackBarRedOpen } from "../actions"
 import { SnackbarGreen } from "./Atoms/SnackbarGreen/SnackbarGreen"
 import { SnackbarRed } from "./Atoms/SnackbarRed/SnackbarRed"
-import {InputText } from "./Atoms/InputText/InputText"
+import { InputText } from "./Atoms/InputText/InputText"
 import { Button } from "./Atoms/Button/Button"
 import axios from "axios"
 import "../css/Login.css"
@@ -27,22 +27,23 @@ class Login extends Component {
          }
       })
          .then((response) => {
-
             if (response.data._id) {
-               if (response.data.password === md5(password)) {
-                  store.dispatch(snackBarGreenOpen(true, "Login was successful"))
-                  setTimeout(() => {
-                     store.dispatch(loginUser(password, username.toLowerCase()))
-
-                     store.dispatch(snackBarGreenOpen(false, ""))
-                  }, 2000);
-               }
-               else {
-                  store.dispatch(snackBarRedOpen(true, "Login not successful"))
-                  setTimeout(() => {
-                     store.dispatch(snackBarRedOpen(false, ""))
-                  }, 2000);
-               }
+               bcrypt.compare(password, response.data.password, function (err, res) {
+                  if (res) {
+                     store.dispatch(snackBarGreenOpen(true, "Login was successful"))
+                     setTimeout(() => {
+                        store.dispatch(loginUser(password, username.toLowerCase()))
+   
+                        store.dispatch(snackBarGreenOpen(false, ""))
+                     }, 2000);
+                  }
+                  else {
+                     store.dispatch(snackBarRedOpen(true, "Login not successful"))
+                     setTimeout(() => {
+                        store.dispatch(snackBarRedOpen(false, ""))
+                     }, 2000);
+                  }
+               });
             }
             else if (response.data === "") {
                store.dispatch(snackBarRedOpen(true, "Login not successful"))
@@ -72,8 +73,8 @@ class Login extends Component {
                   <form action="" method="get" onSubmit={this.handleSubmit}>
 
                      <div className="Login-row">
-                        <InputText type="text" label="Username:" name="username" placeholder="Username" handleChange={this.handleChange}/>
-                        <InputText type="password" label="Password:" name="password" placeholder="Password" handleChange={this.handleChange}/>                   
+                        <InputText type="text" label="Username:" name="username" placeholder="Username" handleChange={this.handleChange} />
+                        <InputText type="password" label="Password:" name="password" placeholder="Password" handleChange={this.handleChange} />
                      </div>
 
                      <Button label="Submit" />
