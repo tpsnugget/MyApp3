@@ -59,7 +59,7 @@ class Destination extends Component {
    render() {
 
       const { name } = this.props
-      const { allowedToModifySelection, oneDestinationData, chosenId, username } = store.getState()
+      const { allowedToModifySelection, oneDestinationData, chosenId } = store.getState()
 
       return (
          <div className="Destination-main-container">

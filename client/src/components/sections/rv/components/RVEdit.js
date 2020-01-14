@@ -197,7 +197,7 @@ class RVNew extends Component {
          <div className="RVNew-main-container">
             {addRVSuccessful && <Redirect to="/rv" />}
             <div className="RVNew-form-container">
-               <h1 className="RVNew-h1">Add a New RV Site</h1>
+               <h1 className="RVNew-h1">Update RV Site</h1>
                <form
                   className="RVNew-form"
                   onSubmit={this.handleSubmit} >

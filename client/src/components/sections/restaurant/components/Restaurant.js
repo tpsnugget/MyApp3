@@ -50,7 +50,7 @@ class Restaurant extends Component {
    render() {
 
       const { name } = this.props
-      const { allowedToModifySelection, oneRestaurantData, chosenId, username } = store.getState()
+      const { allowedToModifySelection, oneRestaurantData, chosenId } = store.getState()
 
       return (
          <div className="Restaurant-main-container">

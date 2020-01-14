@@ -1,4 +1,5 @@
 import React, { Component, Fragment } from "react"
+import md5 from "md5"
 import { store } from "../store"
 import { handleChange, snackBarGreenOpen, snackBarRedOpen, updateUserInfo } from "../actions"
 import { Redirect } from "react-router-dom"
@@ -28,7 +29,7 @@ class User extends Component {
             last: last,
             username: username.toLowerCase(),
             email: email.toLowerCase(),
-            password: password
+            password: md5(password)
          })
             .then((response) => {
                console.log("User Component response: ", response)

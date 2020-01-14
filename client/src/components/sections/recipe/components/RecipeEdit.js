@@ -157,7 +157,7 @@ class RecipeEdit extends Component {
          <div className="RecipeNew-main-container">
             {addRecipeSuccessful && <Redirect to="/recipe" />}
             <div className="RecipeNew-form-container">
-               <h1 className="RecipeNew-h1">Add a New Recipe</h1>
+               <h1 className="RecipeNew-h1">Update Recipe</h1>
                <form
                   className="RecipeNew-form"
                   onSubmit={this.handleSubmit} >

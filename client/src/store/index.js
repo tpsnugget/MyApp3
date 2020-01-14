@@ -23,6 +23,7 @@ const initialState = {
    goodDelete: false,
    goodLogin: false,
    ibu: "",
+   id: "",
    image: "",
    isLoggedIn: false,
    last: "",
