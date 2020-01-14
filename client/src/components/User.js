@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react"
-import md5 from "md5"
+import bcrypt from "bcryptjs"
 import { store } from "../store"
 import { handleChange, snackBarGreenOpen, snackBarRedOpen, updateUserInfo } from "../actions"
 import { Redirect } from "react-router-dom"
@@ -11,6 +11,8 @@ import axios from "axios"
 import "../css/User.css"
 
 var goodSignUp = false
+
+const saltRounds = 10
 
 class User extends Component {
 
@@ -24,40 +26,43 @@ class User extends Component {
       const { email, first, last, password, password2, username } = store.getState()
 
       if (password === password2) {
-         axios.post("http://localhost:9000/users", {
-            first: first,
-            last: last,
-            username: username.toLowerCase(),
-            email: email.toLowerCase(),
-            password: md5(password)
+
+         bcrypt.hash(password, saltRounds, function(err, hash){
+            axios.post("http://localhost:9000/users", {
+               first: first,
+               last: last,
+               username: username.toLowerCase(),
+               email: email.toLowerCase(),
+               password: hash
+            })
+               .then((response) => {
+                  console.log("User Component response: ", response)
+                  if (response.data._id) {
+                     store.dispatch(snackBarGreenOpen(true, "Signup Successful"))
+                     goodSignUp = true
+                     setTimeout(() => {
+                        store.dispatch(snackBarGreenOpen(false, ""))
+                     }, 2000);
+                  }
+                  else if (response.data.name === "MongoError") {
+                     store.dispatch(snackBarRedOpen(true, "Those login credentials are already in use"))
+                     setTimeout(() => {
+                        store.dispatch(snackBarRedOpen(false, ""))
+                        store.dispatch(updateUserInfo("", "", "", "", "", ""))
+                     }, 2000);
+                  }
+                  else if (response.data._message === "User validation failed") {
+                     store.dispatch(snackBarRedOpen(true, "An error occurred during signup"))
+                     setTimeout(() => {
+                        store.dispatch(snackBarRedOpen(false, ""))
+                        store.dispatch(updateUserInfo("", "", "", "", "", ""))
+                     }, 2000);
+                  }
+               })
+               .catch((error) => {
+                  console.error("User Component error: ", error)
+               })
          })
-            .then((response) => {
-               console.log("User Component response: ", response)
-               if (response.data._id) {
-                  store.dispatch(snackBarGreenOpen(true, "Signup Successful"))
-                  goodSignUp = true
-                  setTimeout(() => {
-                     store.dispatch(snackBarGreenOpen(false, ""))
-                  }, 2000);
-               }
-               else if (response.data.name === "MongoError") {
-                  store.dispatch(snackBarRedOpen(true, "Those login credentials are already in use"))
-                  setTimeout(() => {
-                     store.dispatch(snackBarRedOpen(false, ""))
-                     store.dispatch(updateUserInfo("", "", "", "", "", ""))
-                  }, 2000);
-               }
-               else if (response.data._message === "User validation failed") {
-                  store.dispatch(snackBarRedOpen(true, "An error occurred during signup"))
-                  setTimeout(() => {
-                     store.dispatch(snackBarRedOpen(false, ""))
-                     store.dispatch(updateUserInfo("", "", "", "", "", ""))
-                  }, 2000);
-               }
-            })
-            .catch((error) => {
-               console.error("User Component error: ", error)
-            })
       }
       else {
          store.dispatch(snackBarRedOpen(true, "Passwords entered are not identical"))
